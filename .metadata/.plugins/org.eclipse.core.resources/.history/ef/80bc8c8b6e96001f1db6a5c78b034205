@@ -1,0 +1,9 @@
+package Model;
+
+public class ChessBoard {
+	int x;
+	int y;
+	int with;
+	int height;
+	String image
+}

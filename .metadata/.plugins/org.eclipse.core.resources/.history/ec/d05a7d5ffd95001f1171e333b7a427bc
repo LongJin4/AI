@@ -1,0 +1,13 @@
+package View;
+
+import javax.swing.JFrame;
+
+public class Frame extends JFrame{
+	public Frame() {
+		setSize(400, 400);
+		setVisible(true);
+	}
+	public static void main(String[] args) {
+		Frame frame= new Frame();
+	}
+}

@@ -1,0 +1,49 @@
+package Model;
+
+import View.Frame;
+
+public class ChessBoard {
+	int x;
+	int y;
+	int with;
+	int height;
+	String image;
+	public ChessBoard() {
+		// TODO Auto-generated constructor stub
+		x=0;
+		y=0;
+		with= Frame.frame_Width;
+		height=Frame.frame_Height;
+		image = "D:\\Java_Project\\AI\\GameCoTuong\\src\\Board_Image\\Xiangqi_board.png";
+	}
+	public int getX() {
+		return x;
+	}
+	public void setX(int x) {
+		this.x = x;
+	}
+	public int getY() {
+		return y;
+	}
+	public void setY(int y) {
+		this.y = y;
+	}
+	public int getWith() {
+		return with;
+	}
+	public void setWith(int with) {
+		this.with = with;
+	}
+	public int getHeight() {
+		return height;
+	}
+	public void setHeight(int height) {
+		this.height = height;
+	}
+	public String getImage() {
+		return image;
+	}
+	public void setImage(String image) {
+		this.image = image;
+	}
+}

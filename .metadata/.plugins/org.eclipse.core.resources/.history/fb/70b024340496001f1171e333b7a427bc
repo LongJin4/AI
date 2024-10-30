@@ -1,0 +1,23 @@
+package View;
+
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.image.BufferedImage;
+import java.io.File;
+
+import javax.imageio.ImageIO;
+import javax.swing.JPanel;
+
+public class Panel extends JPanel{
+	public Panel() {
+		// TODO Auto-generated constructor stub
+	}
+	@Override
+	public void paint(Graphics g) {
+		// TODO Auto-generated method stub
+		BufferedImage img= null;
+		img= ImageIO.read(new File(TOOL_TIP_TEXT_KEY));
+		g.drawImage(null, 0, 0, this);
+		super.paint(g);
+	}
+}

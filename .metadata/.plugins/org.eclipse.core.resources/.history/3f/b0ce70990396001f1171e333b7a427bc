@@ -1,0 +1,21 @@
+package View;
+
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.image.BufferedImage;
+import java.io.File;
+
+import javax.imageio.ImageIO;
+import javax.swing.JPanel;
+
+public class Panel extends JPanel{
+	public Panel() {
+		// TODO Auto-generated constructor stub
+	}
+	@Override
+	public void paint(Graphics g) {
+		// TODO Auto-generated method stub
+		g.drawImage(null, 0, 0, getFocusCycleRootAncestor())
+		super.paint(g);
+	}
+}

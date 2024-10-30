@@ -1,0 +1,22 @@
+package View;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
+public class Frame extends JFrame {
+	public static final With=800;
+	JPanel mainPanel;
+	public Frame() {
+		mainPanel= new Panel();
+		add(mainPanel);
+		setResizable(false);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setSize(800, 800);
+		setLocationRelativeTo(null);
+		setVisible(true);
+	}
+
+	public static void main(String[] args) {
+		Frame frame = new Frame();
+	}
+}

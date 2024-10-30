@@ -1,0 +1,14 @@
+package Model;
+
+public class ChessBoard {
+	int x;
+	int y;
+	int with;
+	int height;
+	String image;
+	public ChessBoard() {
+		// TODO Auto-generated constructor stub
+		x=0;
+		y=0;
+	}
+}

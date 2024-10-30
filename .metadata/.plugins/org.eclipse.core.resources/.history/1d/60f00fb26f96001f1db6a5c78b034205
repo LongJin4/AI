@@ -1,0 +1,34 @@
+package View;
+
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+import javax.swing.JPanel;
+
+import Model.ChessBoard;
+
+public class Panel extends JPanel{
+	ChessBoard board= new ChessBoard();
+	public Panel() {
+		// TODO Auto-generated constructor stub
+	}
+	@Override
+	public void paint(Graphics g) {
+		// TODO Auto-generated method stub
+		BufferedImage img= null;
+		File file = new File(board.getImage());
+		
+		try {
+			img= ImageIO.read(file);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		super.paint(g);
+		g.drawImage(img, board.getX(), board.Y(),Frame.frame_Width,Frame.frame_Height, this);
+	}
+}
