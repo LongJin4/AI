@@ -1,0 +1,14 @@
+package Model;
+
+import java.io.File;
+
+import View.Frame;
+
+public class ChessBoard {
+	int x;
+	int y;
+	int width;
+	int height;
+	File image;
+	
+}
