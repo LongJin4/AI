@@ -11,8 +11,8 @@ public class Horse extends ChessPiece{
 	File image;
 	String path = "D:\\Java_Project\\AI\\GameCoTuong\\src\\chess_pieces_Image\\";
 
-	public Horse(int x, int y, int width, int height, boolean color) {
-		super(x, y, width, height, color);
+	public Horse(Tile tile, int width, int height, boolean color) {
+		super(tile, width, height, color);
 		// TODO Auto-generated constructor stub
 		if (color) {
 			path += "b";
@@ -28,7 +28,7 @@ public class Horse extends ChessPiece{
 		// TODO Auto-generated method stub
 
 		BufferedImage boardImage = ImageIO.read(image);
-		g2.drawImage(boardImage, x, y, width, height, null);
+		g2.drawImage(boardImage, tile.x, tile.y, tile.size, tile.size, null);
 	}
 
 }
