@@ -5,12 +5,12 @@ import java.io.IOException;
 
 public abstract class ChessPiece {
 	int x, y, width, height;
-	Tile tile;
 	boolean color;// red=true black= false
 
-	public ChessPiece(Tile tile, int width, int height, boolean color) {
+	public ChessPiece(int x, int y, int width, int height, boolean color) {
 		super();
-		this.tile=tile;
+		this.x = x;
+		this.y = y;
 		this.width = width;
 		this.height = height;
 		this.color = color;

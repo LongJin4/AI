@@ -7,21 +7,19 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-import View.Frame;
-
-public class Advisor extends ChessPiece {
+public class Horse extends ChessPiece{
 	File image;
 	String path = "D:\\Java_Project\\AI\\GameCoTuong\\src\\chess_pieces_Image\\";
 
-	public Advisor(Tile tile, int width, int height, boolean color) {
-		super(tile, width, height, color);
+	public Horse(int x, int y, int width, int height, boolean color) {
+		super(x, y, width, height, color);
 		// TODO Auto-generated constructor stub
 		if (color) {
 			path += "b";
 		} else {
 			path += "r";
 		}
-		path += "A.png";
+		path += "N.png";
 		image = new File(path);
 	}
 
@@ -30,8 +28,7 @@ public class Advisor extends ChessPiece {
 		// TODO Auto-generated method stub
 
 		BufferedImage boardImage = ImageIO.read(image);
-		g2.drawImage(boardImage, tile.x, tile.y, tile.size, tile.size, null);
+		g2.drawImage(boardImage, x, y, width, height, null);
 	}
-
 
 }
