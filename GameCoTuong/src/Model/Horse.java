@@ -31,4 +31,5 @@ public class Horse extends ChessPiece{
 		g2.drawImage(boardImage, tile.x, tile.y, tile.size, tile.size, null);
 	}
 
+
 }

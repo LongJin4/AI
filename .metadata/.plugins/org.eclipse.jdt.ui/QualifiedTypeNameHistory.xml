@@ -4,17 +4,13 @@
     <fullyQualifiedTypeName name="java.awt.Color"/>
     <fullyQualifiedTypeName name="javax.imageio.ImageIO"/>
     <fullyQualifiedTypeName name="javax.swing.event.AncestorListener"/>
-    <fullyQualifiedTypeName name="java.awt.event.MouseListener"/>
-    <fullyQualifiedTypeName name="Controller.IController"/>
     <fullyQualifiedTypeName name="Controller.Controller"/>
     <fullyQualifiedTypeName name="Model.ChessBoard"/>
     <fullyQualifiedTypeName name="View.Frame"/>
-    <fullyQualifiedTypeName name="java.awt.Graphics2D"/>
     <fullyQualifiedTypeName name="java.lang.String"/>
     <fullyQualifiedTypeName name="java.io.File"/>
     <fullyQualifiedTypeName name="java.awt.image.BufferedImage"/>
     <fullyQualifiedTypeName name="java.util.ArrayList"/>
-    <fullyQualifiedTypeName name="Model.ChessPiece"/>
     <fullyQualifiedTypeName name="Model.Advisor"/>
     <fullyQualifiedTypeName name="Model.Cannon"/>
     <fullyQualifiedTypeName name="Model.Chariot"/>
@@ -22,4 +18,11 @@
     <fullyQualifiedTypeName name="Model.General"/>
     <fullyQualifiedTypeName name="Model.Horse"/>
     <fullyQualifiedTypeName name="Model.Solider"/>
+    <fullyQualifiedTypeName name="View.Listener"/>
+    <fullyQualifiedTypeName name="java.awt.event.MouseListener"/>
+    <fullyQualifiedTypeName name="Controller.IController"/>
+    <fullyQualifiedTypeName name="java.awt.Graphics2D"/>
+    <fullyQualifiedTypeName name="Model.Tile"/>
+    <fullyQualifiedTypeName name="Model.ChessPiece"/>
+    <fullyQualifiedTypeName name="View.Panel"/>
 </qualifiedTypeNameHistroy>

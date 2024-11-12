@@ -13,6 +13,11 @@ public class Tile {
 		this.y = y;
 		this.size = size;
 	}
+	public Tile(int x2, int y2) {
+		// TODO Auto-generated constructor stub
+		this.x=x2;
+		this.y=y2;
+	}
 	public int getX() {
 		return x;
 	}

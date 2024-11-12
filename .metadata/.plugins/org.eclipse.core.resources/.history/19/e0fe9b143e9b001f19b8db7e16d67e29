@@ -1,7 +1,0 @@
-package Model;
-
-public abstract class ChessPiece {
-	int x, y, width, height;
-	boolean color;//red=true  black= false
-	
-}

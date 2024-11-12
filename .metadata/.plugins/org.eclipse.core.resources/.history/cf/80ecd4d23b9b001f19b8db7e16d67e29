@@ -1,5 +1,0 @@
-package Model;
-
-public class ChessPiece {
-	int x, y, width, height;
-}

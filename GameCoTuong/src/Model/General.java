@@ -8,6 +8,8 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 public class General extends ChessPiece{
+	
+
 	//King
 	File image;
 	String path = "D:\\Java_Project\\AI\\GameCoTuong\\src\\chess_pieces_Image\\";
@@ -32,5 +34,19 @@ public class General extends ChessPiece{
 		g2.drawImage(boardImage, tile.x, tile.y, tile.size, tile.size, null);
 	}
 
+	@Override
+	public Tile getTile() {
+		// TODO Auto-generated method stub
+		return this.tile;
+	}
 
+	@Override
+	public void setTile(Tile tile2) {
+		// TODO Auto-generated method stub
+		this.tile=tile2;
+	}
+	@Override
+	public String toString() {
+		return "Vua "+color;
+	}
 }

@@ -1,0 +1,45 @@
+package View;
+
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+import javax.swing.JPanel;
+import javax.swing.event.AncestorEvent;
+import javax.swing.event.AncestorListener;
+
+import Controller.Controller;
+import Controller.IController;
+import Model.ChessBoard;
+
+public class Panel extends JPanel {
+	BufferedImage image;
+	IController controll;
+	Listener listen;
+	public Panel() {
+		image = new BufferedImage(Frame.frame_Width, Frame.frame_Height, BufferedImage.TYPE_INT_RGB);
+		controll = new Controller();
+		listen= new Listener(controll);
+		this.addMouseListener(listen);
+	}
+
+	public void paint(Graphics g) {
+		// TODO Auto-generated method stub
+		super.paintComponent(g); // Vẽ thành phần mặc định trước
+
+		// Ép kiểu Graphics thành Graphics2D
+		Graphics2D g2 = image.createGraphics();
+		try {
+			controll.draw(g2);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+}
