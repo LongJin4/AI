@@ -20,57 +20,25 @@ import Model.ChessBoard;
 
 public class Panel extends JPanel {
 	BufferedImage image;
-	IController controll = new Controller();
-
-	public Panel() {
+	IController controll;
+	Listener listen;
+	public Panel() throws IOException {
 		image = new BufferedImage(Frame.frame_Width, Frame.frame_Height, BufferedImage.TYPE_INT_RGB);
-		controll = new Controller();
-		this.addMouseListener(new MouseListener() {
-
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				// TODO Auto-generated method stub
-				System.out.println("x:" + e.getX());
-				System.out.println("y:" + e.getY());
-			}
-		});
+		Graphics2D g2= image.createGraphics();
+		controll = new Controller(g2);
+		listen= new Listener(controll,this);
+		this.addMouseListener(listen);
 	}
 
 	public void paint(Graphics g) {
 		// TODO Auto-generated method stub
 		super.paintComponent(g); // Vẽ thành phần mặc định trước
-
-		// Ép kiểu Graphics thành Graphics2D
-		Graphics2D g2 = (Graphics2D) g;
-		try {
-			controll.draw(g2);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		 g.drawImage(image, 0, 0, null);
 	}
+	//ham nay de cap nhat lai gia tri va hinh anh 
+	public void refresh() throws IOException {
+		controll.update();
+		repaint();
+	}
+	
 }

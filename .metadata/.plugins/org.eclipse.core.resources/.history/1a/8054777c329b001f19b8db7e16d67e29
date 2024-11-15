@@ -1,5 +1,0 @@
-package Controller;
-
-public interface IController {
-	draw(Graphics2d g2);
-}

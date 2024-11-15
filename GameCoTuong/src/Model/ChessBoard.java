@@ -11,7 +11,8 @@ import View.Frame;
 
 public class ChessBoard {
 	Tile[][] board;
-	
+	public static int marginTop = 33;// đệm 1 khoảng lên trên để hiển thị đúng vị trí trên bàn cờ
+	public static int marginLeft = 99;// đệm 1 khoảng vào bên trái để hiển thị đúng vị trí trên bàn cờ
 
 	private int tilesize;
 	int x, y;
@@ -19,7 +20,7 @@ public class ChessBoard {
 
 	public ChessBoard(int x, int y) {
 		super();
-		board = new Tile[10][9]; // 10 hàng 9 cột
+		board = new Tile[9][10]; // 10 hàng 9 cột
 		image = new File("src\\Board_Image\\Xiangqi_board.png");
 		tilesize = 67;
 		this.x = x;
@@ -28,14 +29,12 @@ public class ChessBoard {
 	}
 
 	private void initialBoard() {
-		int marginLeft = 33;// đệm 1 khoảng vào bên trái để hiển thị đúng vị trí trên bàn cờ
-		int marginTop = 99;// đệm 1 khoảng lên trên để hiển thị đúng vị trí trên bàn cờ
 		// Tạo mảng ban đầu
 		for (int i = 0; i < board.length; i++) {
 			for (int j = 0; j < board[i].length; j++) {
 				// tọa độ x,y sao cho khớp 1 ô là vị trí quân trên đường của bàn cờ
-				int x = j * tilesize + marginLeft - tilesize / 2;
-				int y = i * tilesize + marginTop - tilesize / 2;
+				int x = i * tilesize + marginTop - tilesize / 2;
+				int y = j * tilesize + marginLeft - tilesize / 2;
 				board[i][j] = new Tile(x, y, tilesize);
 			}
 		}
@@ -46,8 +45,6 @@ public class ChessBoard {
 		int with = boardImage.getWidth() * 2 / 3;// nhân 2/3 để điều chỉnh tỷ lệ ảnh gốc của bàn cờ
 		int height = boardImage.getHeight() * 2 / 3;
 
-		// vì x đang nhận vào là frameWith/2 nên bàn cờ sẽ bị lêch sang phải do đó phải
-		// trừ 1/2 bàn cờ để nó vô giữa
 		g2.drawImage(boardImage, x, y, with, height, null);
 
 		for (int i = 0; i < board.length; i++) {

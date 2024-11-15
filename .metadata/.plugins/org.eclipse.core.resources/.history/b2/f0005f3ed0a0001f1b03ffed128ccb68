@@ -1,0 +1,210 @@
+package Controller;
+
+import java.awt.Graphics2D;
+import java.io.IOException;
+import java.util.ArrayList;
+
+import Model.Advisor;
+import Model.Cannon;
+import Model.Chariot;
+import Model.ChessBoard;
+import Model.ChessPiece;
+import Model.Elephant;
+import Model.General;
+import Model.Horse;
+import Model.Solider;
+import Model.Tile;
+import View.Frame;
+import View.Listener;
+
+public class Controller implements IController {
+	ChessBoard chessboard = new ChessBoard(0, 0);
+	Tile[][] state = chessboard.getBoard();
+	Graphics2D g2;
+	ArrayList<ChessPiece> listSurvival = new ArrayList<>();// list cac quan con song
+	// Khai bao quan do
+	ChessPiece redLeftChariot, redRightChariot;
+	ChessPiece redLeftAdvisor, redRightAdvisor;
+	ChessPiece redLeftCannon, redRightCannon;
+	ChessPiece redLeftElephant, redRightElephant;
+	ChessPiece redGeneral;
+	ChessPiece redLeftHorse, redRightHorse;
+	ChessPiece redSolider1, redSolider2, redSolider3, redSolider4, redSolider5;
+	// khai bao quan den
+	ChessPiece blackLeftChariot, blackRightChariot;
+	ChessPiece blackLeftAdvisor, blackRightAdvisor;
+	ChessPiece blackLeftCannon, blackRightCannon;
+	ChessPiece blackLeftElephant, blackRightElephant;
+	ChessPiece blackGeneral;
+	ChessPiece blackLeftHorse, blackRightHorse;
+	ChessPiece blackSolider1, blackSolider2, blackSolider3, blackSolider4, blackSolider5;
+
+	public Controller(Graphics2D g2) throws IOException {
+		this.g2 = g2;
+		Tile[][] state = chessboard.getBoard();
+		System.out.println(state[0][0].getX());
+		int tileSize = state[0][0].getSize();
+		// khoi tao quan do
+		redGeneral = new General(state[0][4], tileSize, tileSize, false);
+		redLeftChariot = new Chariot(state[0][0], tileSize, tileSize, false);
+		redRightChariot = new Chariot(state[0][8], tileSize, tileSize, false);
+		redLeftAdvisor = new Advisor(state[0][3], tileSize, tileSize, false);
+		redRightAdvisor = new Advisor(state[0][5], tileSize, tileSize, false);
+		redLeftCannon = new Cannon(state[2][1], tileSize, tileSize, false);
+		redRightCannon = new Cannon(state[2][7], tileSize, tileSize, false);
+		redLeftElephant = new Elephant(state[0][6], tileSize, tileSize, false);
+		redRightElephant = new Elephant(state[0][2], tileSize, tileSize, false);
+		redLeftHorse = new Horse(state[0][1], tileSize, tileSize, false);
+		redRightHorse = new Horse(state[0][7], tileSize, tileSize, false);
+		redSolider1 = new Solider(state[3][0], tileSize, tileSize, false);
+		redSolider2 = new Solider(state[3][2], tileSize, tileSize, false);
+		redSolider3 = new Solider(state[3][4], tileSize, tileSize, false);
+		redSolider4 = new Solider(state[3][6], tileSize, tileSize, false);
+		redSolider5 = new Solider(state[3][8], tileSize, tileSize, false);
+		// add vao list
+		listSurvival.add(redGeneral);
+		listSurvival.add(redLeftChariot);
+		listSurvival.add(redRightChariot);
+		listSurvival.add(redLeftAdvisor);
+		listSurvival.add(redRightAdvisor);
+		listSurvival.add(redLeftCannon);
+		listSurvival.add(redRightCannon);
+		listSurvival.add(redLeftElephant);
+		listSurvival.add(redRightElephant);
+		listSurvival.add(redLeftHorse);
+		listSurvival.add(redRightHorse);
+		listSurvival.add(redSolider1);
+		listSurvival.add(redSolider2);
+		listSurvival.add(redSolider3);
+		listSurvival.add(redSolider4);
+		listSurvival.add(redSolider5);
+
+		// khoi tao quan den
+		blackGeneral = new General(state[9][4], tileSize, tileSize, true);
+		blackLeftChariot = new Chariot(state[9][0], tileSize, tileSize, true);
+		blackRightChariot = new Chariot(state[9][8], tileSize, tileSize, true);
+
+		blackLeftAdvisor = new Advisor(state[9][3], tileSize, tileSize, true);
+		blackRightAdvisor = new Advisor(state[9][5], tileSize, tileSize, true);
+
+		blackLeftCannon = new Cannon(state[7][1], tileSize, tileSize, true);
+		blackRightCannon = new Cannon(state[7][7], tileSize, tileSize, true);
+
+		blackLeftElephant = new Elephant(state[9][6], tileSize, tileSize, true);
+		blackRightElephant = new Elephant(state[9][2], tileSize, tileSize, true);
+
+		blackLeftHorse = new Horse(state[9][1], tileSize, tileSize, true);
+		blackRightHorse = new Horse(state[9][7], tileSize, tileSize, true);
+
+		blackSolider1 = new Solider(state[6][0], tileSize, tileSize, true);
+		blackSolider2 = new Solider(state[6][2], tileSize, tileSize, true);
+		blackSolider3 = new Solider(state[6][4], tileSize, tileSize, true);
+		blackSolider4 = new Solider(state[6][6], tileSize, tileSize, true);
+		blackSolider5 = new Solider(state[6][8], tileSize, tileSize, true);
+		// them cac quan den vao list
+		listSurvival.add(blackGeneral);
+		listSurvival.add(blackLeftChariot);
+		listSurvival.add(blackRightChariot);
+		listSurvival.add(blackLeftAdvisor);
+		listSurvival.add(blackRightAdvisor);
+		listSurvival.add(blackLeftCannon);
+		listSurvival.add(blackRightCannon);
+		listSurvival.add(blackLeftElephant);
+		listSurvival.add(blackRightElephant);
+		listSurvival.add(blackLeftHorse);
+		listSurvival.add(blackRightHorse);
+		listSurvival.add(blackSolider1);
+		listSurvival.add(blackSolider2);
+		listSurvival.add(blackSolider3);
+		listSurvival.add(blackSolider4);
+		listSurvival.add(blackSolider5);
+		draw(g2);
+	}
+
+	public void draw(Graphics2D g2) throws IOException {
+		// TODO Auto-generated method stub
+		chessboard.draw(g2);
+//draw quan do
+//		redGeneral.draw(g2);
+//		redLeftChariot.draw(g2);
+//		redRightChariot.draw(g2);
+//		redLeftAdvisor.draw(g2);
+//		redRightAdvisor.draw(g2);
+//		redLeftCannon.draw(g2);
+//		redRightCannon.draw(g2);
+//		redLeftElephant.draw(g2);
+//		redRightElephant.draw(g2);
+//		redLeftHorse.draw(g2);
+//		redRightHorse.draw(g2);
+//		redSolider1.draw(g2);
+//		redSolider2.draw(g2);
+//		redSolider3.draw(g2);
+//		redSolider4.draw(g2);
+//		redSolider5.draw(g2);
+////draw quan den
+//		blackGeneral.draw(g2);
+//		blackLeftChariot.draw(g2);
+//		blackRightChariot.draw(g2);
+//		blackLeftAdvisor.draw(g2);
+//		blackRightAdvisor.draw(g2);
+//		blackLeftCannon.draw(g2);
+//		blackRightCannon.draw(g2);
+//		blackLeftElephant.draw(g2);
+//		blackRightElephant.draw(g2);
+//		blackLeftHorse.draw(g2);
+//		blackRightHorse.draw(g2);
+//		blackSolider1.draw(g2);
+//		blackSolider2.draw(g2);
+//		blackSolider3.draw(g2);
+//		blackSolider4.draw(g2);
+//		blackSolider5.draw(g2);
+		for (ChessPiece chessPiece : listSurvival) {
+			chessPiece.draw(g2);
+			if (chessPiece.getTile().equals(blackGeneral.getTile())) {
+				System.out.println(chessPiece+" x: "+chessPiece.getTile().getX());
+			}
+			
+		}
+		
+	}
+
+	@Override
+	public ChessPiece select(int x, int y) {
+		// TODO Auto-generated method stub
+		ChessPiece result = null;
+		for (ChessPiece chessPiece : listSurvival) {
+			int tileX = chessPiece.getTile().getX();
+			int size = chessPiece.getTile().getSize();
+			int tileY = chessPiece.getTile().getY();
+
+			// x nam trong 1 o co vi tri tu x den x+ size va y nam trong y den y + size
+			if (tileX < x && (tileX + size) > x && y > tileY && y < tileY + size) {
+				result = chessPiece;
+				break;
+			}
+		}
+	
+		return result;
+	}
+
+	@Override
+	public void update() throws IOException {
+		// TODO Auto-generated method stub
+		draw(g2);
+		System.out.println("draw");
+	}
+
+	@Override
+	public void move(ChessPiece chesspiece, int x, int y) {
+		// TODO Auto-generated method stub
+		Tile newTile= null;
+		for (int i = 0; i < state.length; i++) {
+			for (int j = 0; j < state[0].length; j++) {
+				if (tileX < x && (tileX + size) > x && y > tileY && y < tileY + size) {
+					newTile=state[i][j];
+				}
+			}
+		}
+	}
+
+}
