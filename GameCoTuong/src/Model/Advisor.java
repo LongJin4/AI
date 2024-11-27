@@ -1,38 +1,40 @@
 package Model;
 
-import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
-
-import View.Frame;
-
 public class Advisor extends ChessPiece {
-	File image;
-	String path = "D:\\Java_Project\\AI\\GameCoTuong\\src\\chess_pieces_Image\\";
 
-	public Advisor(Tile tile, int width, int height, boolean color) {
-		super(tile, width, height, color);
-		// TODO Auto-generated constructor stub
-		if (color) {
-			path += "b";
-		} else {
-			path += "r";
-		}
-		path += "A.png";
-		image = new File(path);
+	public Advisor(boolean color) {
+		super(color);
+		this.type = "Advisor";
 	}
+
+	
 
 	@Override
-	public void draw(Graphics2D g2) throws IOException {
-		// TODO Auto-generated method stub
 
-		BufferedImage boardImage = ImageIO.read(image);
-		g2.drawImage(boardImage, tile.x, tile.y, tile.size, tile.size, null);
+	public void checkPattern(Move move) {
+		super.checkPattern(move);
+
+		if (!move.isDiagonal()) {
+			move.setValid(false);
+		}
+		if (Math.abs(move.getDx()) != 1) {
+			move.setValid(false);
+		}
+
+		if (move.getFinalX() < 3 || move.getFinalX() > 5) {
+			move.setValid(false);
+		}
+
+		if (this.color) {
+			if (move.getFinalY() > 7) {
+				move.setValid(false);
+			}
+		} else {
+
+			if (move.getFinalY() < 2) {
+				move.setValid(false);
+			}
+		}
+
 	}
-
-
-
 }

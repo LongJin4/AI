@@ -1,13 +1,13 @@
 package Model;
 
+
+
 public class Tile {
 	int x;
 	int y;
 	int size;
+	private ChessPiece piece;
 	
-	public Tile() {
-		this(0,0,100);
-	}
 	public Tile(int x, int y, int size) {
 		this.x = x;
 		this.y = y;
@@ -36,5 +36,10 @@ public class Tile {
 	public void setSize(int size) {
 		this.size = size;
 	}
-	
+    public ChessPiece getPiece() {
+        return this.piece;
+    }
+    public ChessPiece setPiece(ChessPiece piece) {
+    	return this.piece = piece;
+    }
 }
