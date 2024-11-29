@@ -1,52 +1,46 @@
 package Model;
 
-import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
+public class General extends ChessPiece {
 
-import javax.imageio.ImageIO;
-
-public class General extends ChessPiece{
 	
 
-	//King
-	File image;
-	String path = "D:\\Java_Project\\AI\\GameCoTuong\\src\\chess_pieces_Image\\";
-
-	public General(Tile tile, int width, int height, boolean color) {
-		super(tile, width, height, color);
-		// TODO Auto-generated constructor stub
-		if (color) {
-			path += "b";
-		} else {
-			path += "r";
-		}
-		path += "K.png";
-		image = new File(path);
+	public General(boolean color) {
+		super(color);
+		this.type="General";
 	}
 
-	@Override
-	public void draw(Graphics2D g2) throws IOException {
-		// TODO Auto-generated method stub
-
-		BufferedImage boardImage = ImageIO.read(image);
-		g2.drawImage(boardImage, tile.x, tile.y, tile.size, tile.size, null);
-	}
-
-	@Override
-	public Tile getTile() {
-		// TODO Auto-generated method stub
-		return this.tile;
-	}
-
-	@Override
-	public void setTile(Tile tile2) {
-		// TODO Auto-generated method stub
-		this.tile=tile2;
-	}
+	
 	@Override
 	public String toString() {
-		return "Vua "+color;
+		return "Vua " + color;
+	}
+
+	@Override
+
+	public void checkPattern(Move move) {
+
+		super.checkPattern(move);
+
+		if (!move.isHorizontal() && !move.isVertical()) {
+			move.setValid(false);
+		}
+		if (Math.abs(move.getDx()) > 1 || Math.abs(move.getDy()) > 1) {
+			move.setValid(false);
+		}
+
+		// stays in generals quarters
+		if (move.getFinalX() < 3 || move.getFinalX() > 5) {
+			move.setValid(false);
+		}
+
+		if (this.color) {
+			if (move.getFinalY() > 2) {
+				move.setValid(false);
+			}
+		} else {
+			if (move.getFinalY() < 7) {
+				move.setValid(false);
+			}
+		}
 	}
 }

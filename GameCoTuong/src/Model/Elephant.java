@@ -1,35 +1,37 @@
 package Model;
 
-import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 
-import javax.imageio.ImageIO;
 
-public class Elephant extends ChessPiece{
-	File image;
-	String path = "D:\\Java_Project\\AI\\GameCoTuong\\src\\chess_pieces_Image\\";
-
-	public Elephant(Tile tile, int width, int height, boolean color) {
-		super(tile, width, height, color);
-		// TODO Auto-generated constructor stub
-		if (color) {
-			path += "b";
-		} else {
-			path += "r";
-		}
-		path += "B.png";
-		image = new File(path);
+public class Elephant extends ChessPiece {
+	
+	public Elephant( boolean color) {
+		super( color);
+		this.type="Elephant";
 	}
+
+	
 
 	@Override
-	public void draw(Graphics2D g2) throws IOException {
-		// TODO Auto-generated method stub
+	public void checkPattern(Move move) {
+		super.checkPattern(move);
 
-		BufferedImage boardImage = ImageIO.read(image);
-		g2.drawImage(boardImage, tile.x, tile.y, tile.size, tile.size, null);
+		if (!move.isDiagonal()) {
+			move.setValid(false);
+		}
+		if (Math.abs(move.getDx()) != 2 && Math.abs(move.getDy())!= 2) {
+			move.setValid(false);
+		}
+
+		// river crossing prevention
+		if (this.color) {
+			if (move.getFinalY() > 4) {
+				move.setValid(false);
+			}
+		} else {
+			if (move.getFinalY() < 5) {
+				move.setValid(false);
+			}
+		}
+
 	}
-
-
 }
