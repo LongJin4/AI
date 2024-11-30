@@ -17,8 +17,9 @@ public abstract class ChessPiece {
 	/**
 	 * Hàm kiểm tra logic nước đi
 	 * @param move : nhận vào 1 nước đi để kiểm tra
+	 * @param board 
 	 */
-	public void checkPattern(Move move) {
+	public void checkPattern(Move move, Tile[][] board) {
 		move.setValid(true);
 	}
 

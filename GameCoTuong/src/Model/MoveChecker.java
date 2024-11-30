@@ -12,16 +12,16 @@ package Model;
 			this.gBoard = gBoard;
 			this.legal = true;
 			CheckPiece();
-
+			
 		}
+
 
 		private void CheckPiece() {
 			ChessPiece temp = gBoard.getTile(move.getOriginX(), move.getOriginY()).getPiece();
-
 			if (temp == null) {
 				this.legal = false;
 			} else {
-				temp.checkPattern(move);
+				temp.checkPattern(move,gBoard.board);
 				if (!move.isValid()) {
 					this.legal = false;
 				}

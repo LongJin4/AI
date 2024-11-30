@@ -17,10 +17,9 @@ public class General extends ChessPiece {
 
 	@Override
 
-	public void checkPattern(Move move) {
+	public void checkPattern(Move move,Tile[][] board) {
 
-		super.checkPattern(move);
-
+		super.checkPattern(move, board);
 		if (!move.isHorizontal() && !move.isVertical()) {
 			move.setValid(false);
 		}

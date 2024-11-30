@@ -7,13 +7,10 @@ public class Advisor extends ChessPiece {
 		this.type = "Advisor";
 	}
 
-	
-
 	@Override
-
-	public void checkPattern(Move move) {
-		super.checkPattern(move);
-
+	public void checkPattern(Move move,Tile[][] board) {
+		// TODO Auto-generated method stub
+		super.checkPattern(move, board);
 		if (!move.isDiagonal()) {
 			move.setValid(false);
 		}
@@ -35,6 +32,6 @@ public class Advisor extends ChessPiece {
 				move.setValid(false);
 			}
 		}
-
 	}
+
 }

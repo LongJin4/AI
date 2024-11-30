@@ -11,9 +11,9 @@ public class Soldier extends ChessPiece {
 	}
 
 	@Override
-	public void checkPattern(Move move) {
+	public void checkPattern(Move move,Tile[][] board) {
 		// TODO Auto-generated method stub
-		super.checkPattern(move);
+		super.checkPattern(move, board);
 		boolean isCrossed;
 		if (this.color) {
 			if (move.getOriginY() < 5) {

@@ -23,6 +23,7 @@
     <fullyQualifiedTypeName name="Controller.IController"/>
     <fullyQualifiedTypeName name="java.awt.Graphics2D"/>
     <fullyQualifiedTypeName name="Model.Tile"/>
-    <fullyQualifiedTypeName name="Model.ChessPiece"/>
     <fullyQualifiedTypeName name="View.Panel"/>
+    <fullyQualifiedTypeName name="java.lang.Math"/>
+    <fullyQualifiedTypeName name="Model.ChessPiece"/>
 </qualifiedTypeNameHistroy>
