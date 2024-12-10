@@ -132,8 +132,11 @@ public class ChessBoard {
 		this.board[move.getFinalX()][move.getFinalY()].setPiece(curr);
 		this.board[move.getOriginX()][move.getOriginY()].setPiece(null);
 	}
+
 	/**
-	 * Check if move is legal then make a move,if make a move then toggle player turn
+	 * Check if move is legal then make a move,if make a move then toggle player
+	 * turn
+	 * 
 	 * @param move
 	 * @return
 	 */
@@ -145,12 +148,20 @@ public class ChessBoard {
 			toggleTurn();
 			return true;
 		}
-		
+
 		return false;
 	}
 
 	public Tile[][] getBoard() {
 		return board;
+	}
+
+	public boolean isPlayer1Turn() {
+		return isPlayer1Turn;
+	}
+
+	public void setPlayer1Turn(boolean isPlayer1Turn) {
+		this.isPlayer1Turn = isPlayer1Turn;
 	}
 
 	public void setBoard(Tile[][] board) {
@@ -169,5 +180,17 @@ public class ChessBoard {
 		return this.tilesize;
 	}
 
-	
+	public boolean isGameOver(ChessBoard board) {
+		if (checkMate()) {
+			return true;
+			// set Winner
+		}
+		return false;
+	}
+
+	private boolean checkMate() {
+		// if no valid move for general return true
+		return false;
+	}
+
 }
