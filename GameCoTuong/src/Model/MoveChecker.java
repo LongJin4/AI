@@ -17,17 +17,29 @@ package Model;
 
 
 		private void CheckPiece() {
+			
 			ChessPiece temp = gBoard.getTile(move.getOriginX(), move.getOriginY()).getPiece();
 			if (temp == null) {
 				this.legal = false;
 			} else {
+			
 				temp.checkPattern(move,gBoard.board);
 				if (!move.isValid()) {
 					this.legal = false;
 				}
+				if(checkAttack(move)&&move.isValid()&&gBoard.isPlayer1Turn==temp.color) {
+					gBoard.attack(move);
+				}
+				gBoard.heuristic();
 			}
 
 		}
+		private boolean checkAttack(Move move2) {
+			// TODO Auto-generated method stub
+			return (gBoard.getBoard()[move.getFinalX()][move.getFinalY()].getPiece())!=null;
+		}
+
+
 		public boolean isLegal() {
 			return this.legal;
 		}

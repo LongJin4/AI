@@ -24,6 +24,8 @@ public class Controller implements MouseListener {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.add(view);
 		frame.pack();
+//		frame.setLocationRelativeTo(null);
+		frame.setLocation(800, 0);
 		frame.setVisible(true);
 	}
 

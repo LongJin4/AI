@@ -1,41 +1,56 @@
 package Model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Elephant extends ChessPiece {
+	private int value = 20;
+	private List<Tile> listCanMove;
 
 	public Elephant(boolean color) {
 		super(color);
 		this.type = "Elephant";
+		listCanMove = new ArrayList<>();
 	}
 
 	@Override
-	public void checkPattern(Move move, Tile[][] board) {
-		super.checkPattern(move, board);
-
-		if (!move.isDiagonal()) {
-			move.setValid(false);
-		}
-		if (Math.abs(move.getDx()) != 2 && Math.abs(move.getDy()) != 2) {
-			if (board[(move.getFinalX() + move.getOriginX()) / 2][(move.getFinalY() + move.getOriginY()) / 2]
-					.getPiece() == null) {
-				move.setValid(false);
-			}
-		}
-//		check có quân nào chặn không
-		if (board[(move.getFinalX() + move.getOriginX()) / 2][(move.getFinalY() + move.getOriginY()) / 2]
-				.getPiece() != null) {
-			move.setValid(false);
-		}
-
-		// river crossing prevention
+	protected void UpDateListCanMove(int i, int j, Tile[][] board) {
+		// TODO Auto-generated method stub
+		listCanMove.clear();
+		int up=j+2;
+		int down=j-2;
+		int left=i-2;
+		int right=i+2;
 		if (this.color) {
-			if (move.getFinalY() > 4) {
-				move.setValid(false);
-			}
+			if (down >= 0 &&left >=0)
+				listCanMove.add(board[left][down]);
+			if (up <= 5 && left >= 0)
+				listCanMove.add(board[left][up]);
+			if (down >= 0 && right <= board[0].length)
+				listCanMove.add(board[right][down]);
+			if (up <= 5 && right <= board[0].length)
+				listCanMove.add(board[right][up]);
 		} else {
-			if (move.getFinalY() < 5) {
-				move.setValid(false);
-			}
+			if (down>= 5 && left >= 0)
+				listCanMove.add(board[left][down]);
+			if (up <= 9 && left >= 0)
+				listCanMove.add(board[left][up]);
+			if (down >= 5 && right<= board[0].length)
+				listCanMove.add(board[right][down]);
+			if (up <= 9 && right <= board[0].length)
+				listCanMove.add(board[right][up]);
 		}
+	}
 
+	@Override
+	public int getValue() {
+		// TODO Auto-generated method stub
+		return value;
+	}
+
+	@Override
+	protected List<Tile> getListCanmove() {
+		// TODO Auto-generated method stub
+		return listCanMove;
 	}
 }

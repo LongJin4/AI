@@ -1,27 +1,65 @@
 package Model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Horse extends ChessPiece {
+	private int value = 30;
+	private List<Tile> listCanMove;
 
 	public Horse(boolean color) {
 		super(color);
 		this.type = "Horse";
+		listCanMove = new ArrayList<>();
 	}
 
 	@Override
-	public void checkPattern(Move move, Tile[][] board) {
+	protected void UpDateListCanMove(int i, int j, Tile[][] board) {
 		// TODO Auto-generated method stub
-		super.checkPattern(move, board);
-//		 thêm kiểm tra logic quân mã
-		System.out.println(move.getOriginX()+"x"+move.getFinalX());
-		System.out.println(board[(move.getOriginX() + move.getFinalX()) / 2][move.getOriginY()].getPiece() != null);
-		if (!((Math.abs(move.getDx()) == 1 && Math.abs(move.getDy()) == 2
-				&& board[move.getOriginX()][(move.getOriginY() + move.getFinalY()) / 2].getPiece() == null))
-				|| (Math.abs(move.getDx()) == 2 && Math.abs(move.getDy()) == 1
-						&&board[(move.getOriginX() + move.getFinalX()) / 2][move.getOriginY()].getPiece() == null )) {
-			
-			move.setValid(false);
-		}
+		// Xóa các nước đi cũ trong list
+		listCanMove.clear();
 
+		// Các hướng di chuyển của quân mã
+		int[][] directions = { { -2, -1 }, { -2, 1 }, { 2, -1 }, { 2, 1 }, { -1, -2 }, { 1, -2 }, { -1, 2 }, { 1, 2 } };
+
+		// Các vị trí "chốt mã" tương ứng với từng hướng di chuyển
+		int[][] barriers = { { -1, 0 }, { -1, 0 }, { 1, 0 }, { 1, 0 }, { 0, -1 }, { 0, -1 }, { 0, 1 }, { 0, 1 } };
+		int boardHeight = board.length;
+		int boardWidth = board[0].length;
+
+		// Kiểm tra từng hướng di chuyển
+		for (int k = 0; k < directions.length; k++) {
+			int newI = i + directions[k][0];
+			int newJ = j + directions[k][1];
+			// Kiểm tra nếu ô chốt mã không bị cản
+			int barrierI = i + barriers[k][0];
+			int barrierJ = j + barriers[k][1];
+
+			if (isInBounds(barrierI, barrierJ, boardHeight, boardWidth)
+					&& board[barrierI][barrierJ].getPiece() == null) {
+				// Kiểm tra nếu ô mới nằm trong giới hạn bàn cờ
+				if (isInBounds(newI, newJ, boardHeight, boardWidth)) {
+					// Kiểm tra nếu ô mới hợp lệ (trống hoặc có quân đối phương)
+					listCanMove.add(board[newI][newJ]);
+				}
+			} 
+		}
+	}
+
+	private boolean isInBounds(int i, int j, int height, int width) {
+		return i >= 0 && i < height && j >= 0 && j < width;
+	}
+
+	@Override
+	public int getValue() {
+		// TODO Auto-generated method stub
+		return value;
+	}
+
+	@Override
+	protected List<Tile> getListCanmove() {
+		// TODO Auto-generated method stub
+		return listCanMove;
 	}
 
 }

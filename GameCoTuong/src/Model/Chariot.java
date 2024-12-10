@@ -1,39 +1,70 @@
 package Model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Chariot extends ChessPiece {
+	private int value = 50;
+	private List<Tile> listCanMove;
 
 	public Chariot(boolean color) {
 		super(color);
 		this.type = "Chariot";
+		listCanMove = new ArrayList<>();
 	}
 
 	@Override
-	public void checkPattern(Move move, Tile[][] board) {
-		move.setValid(false);
-
-//		 kiểm tra xem có quân cờ nào trên đường đi không
-
-		if (move.isHorizontal()) {
-			move.setValid(true);
-			for (int i = Math.min(move.getOriginX(), move.getFinalX()) + 1; i < Math.max(move.getOriginX(),
-					move.getFinalX()); i++) {
-				if (board[i][move.getOriginY()].getPiece() != null) {
-					move.setValid(false);
+	protected void UpDateListCanMove(int i, int j, Tile[][] board) {
+		// TODO Auto-generated method stub
+		listCanMove.clear();
+		if (i + 1 < board.length) {
+			for (int k = i + 1; k < board.length; k++) {
+				if (board[k][j].getPiece() == null) {
+					listCanMove.add(board[k][j]);
+				} else {
 					break;
 				}
 			}
-		} else {
-			if (move.isVertical()) {
-				move.setValid(true);
-				for (int i = Math.min(move.getOriginY(), move.getFinalY()) ; i < Math.max(move.getOriginY(),
-						move.getFinalY()); i++) {
-					if (board[move.getOriginX()][i].getPiece() != null&&i!=move.getOriginY()) {
-						move.setValid(false);
-						break;
-					}
+		}
+		if (i - 1 > 0) {
+			for (int k = i - 1; k >= 0; k--) {
+				if (board[k][j].getPiece() == null) {
+					listCanMove.add(board[k][j]);
+				} else {
+					break;
 				}
 			}
 		}
+		if (j + 1 < board[0].length) {
+			for (int k = j + 1; k < board[0].length; k++) {
+				if (board[i][k].getPiece() == null) {
+					listCanMove.add(board[i][k]);
+				} else {
+					break;
+				}
+			}
+		}
+		if (j - 1 > 0) {
+			for (int k = j - 1; k >= 0; k--) {
+				if (board[i][k].getPiece() == null) {
+					listCanMove.add(board[i][k]);
+				} else {
+					break;
+				}
+			}
+		}
+	}
+
+	@Override
+	public int getValue() {
+		// TODO Auto-generated method stub
+		return value;
+	}
+
+	@Override
+	protected List<Tile> getListCanmove() {
+		// TODO Auto-generated method stub
+		return listCanMove;
 	}
 
 }

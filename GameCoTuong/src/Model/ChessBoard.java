@@ -4,6 +4,7 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.imageio.ImageIO;
@@ -11,13 +12,13 @@ import javax.imageio.ImageIO;
 public class ChessBoard {
 	public static final int PLAYER1_WINS = 1;
 	public static final int PLAYER2_WINS = 2;
-	private boolean isPlayer1Turn; // Track whose turn it is
+	public boolean isPlayer1Turn; // Track whose turn it is
 	Tile[][] board;
 	public static int marginTop = 33;// đệm 1 khoảng lên trên để hiển thị đúng vị trí trên bàn cờ
 	public static int marginLeft = 99;// đệm 1 khoảng vào bên trái để hiển thị đúng vị trí trên bàn cờ
 	private int x, y;
 	private int tilesize;
-
+	List<ChessPiece> listPieceRedAlive, listPieceBlAlive;
 	File image;
 
 	public ChessBoard(int x, int y) {
@@ -27,8 +28,11 @@ public class ChessBoard {
 		tilesize = 67;
 		this.x = x;
 		this.y = y;
+		listPieceRedAlive = new ArrayList<>();
+		listPieceBlAlive = new ArrayList<>();
 		initialBoard();
 		initialState(this.board);
+
 	}
 
 	/**
@@ -119,7 +123,19 @@ public class ChessBoard {
 		board[4][6].setPiece(new Soldier(false));
 		board[6][6].setPiece(new Soldier(false));
 		board[8][6].setPiece(new Soldier(false));
-
+//		thêm các quân cờ vào danh sách các quân cờ còn sống
+		for (int i = 0; i < board.length; i++) {
+			for (int j = 0; j < board[0].length; j++) {
+				if (board[i][j].getPiece() != null) {
+					board[i][j].getPiece().UpDateListCanMove(i, j, board);
+					if (board[i][j].getPiece().color) {
+						listPieceRedAlive.add(board[i][j].getPiece());
+					} else {
+						listPieceBlAlive.add(board[i][j].getPiece());
+					}
+				}
+			}
+		}
 	}
 
 	/**
@@ -131,9 +147,24 @@ public class ChessBoard {
 		ChessPiece curr = board[move.getOriginX()][move.getOriginY()].getPiece();
 		this.board[move.getFinalX()][move.getFinalY()].setPiece(curr);
 		this.board[move.getOriginX()][move.getOriginY()].setPiece(null);
+		updatePiece();
 	}
+
+	private void updatePiece() {
+		// TODO Auto-generated method stub
+		for (int i = 0; i < board.length; i++) {
+			for (int j = 0; j < board[0].length; j++) {
+				if (board[i][j].getPiece() != null) {
+					board[i][j].getPiece().UpDateListCanMove(i, j, board);
+				}
+			}
+		}
+	}
+
 	/**
-	 * Check if move is legal then make a move,if make a move then toggle player turn
+	 * Check if move is legal then make a move,if make a move then toggle player
+	 * turn
+	 * 
 	 * @param move
 	 * @return
 	 */
@@ -145,7 +176,7 @@ public class ChessBoard {
 			toggleTurn();
 			return true;
 		}
-		
+
 		return false;
 	}
 
@@ -169,5 +200,31 @@ public class ChessBoard {
 		return this.tilesize;
 	}
 
-	
+	public int heuristic() {
+		int totalRed = 0;
+		int totalBlack = 0;
+		for (ChessPiece piece : listPieceRedAlive) {
+			totalRed += piece.heuristic();
+		}
+		for (ChessPiece piece : listPieceBlAlive) {
+			totalBlack += piece.heuristic();
+		}
+		int res = 0;
+		res = (isPlayer1Turn == true) ? (totalRed - totalBlack) : (totalBlack - totalRed);
+		System.out.println(res);
+		return res;
+
+	}
+
+	public void attack(Move move) {
+		// TODO Auto-generated method stub
+		ChessPiece piece = board[move.getFinalX()][move.getFinalY()].getPiece();
+		if (piece.color) {
+			listPieceRedAlive.remove(piece);
+		} else {
+			listPieceBlAlive.remove(piece);
+		}
+		System.out.println("attack: " + piece.getClass());
+		board[move.getFinalX()][move.getFinalY()].setPiece(null);
+	}
 }
