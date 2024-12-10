@@ -184,6 +184,14 @@ public class ChessBoard {
 		return board;
 	}
 
+	public boolean isPlayer1Turn() {
+		return isPlayer1Turn;
+	}
+
+	public void setPlayer1Turn(boolean isPlayer1Turn) {
+		this.isPlayer1Turn = isPlayer1Turn;
+	}
+
 	public void setBoard(Tile[][] board) {
 		this.board = board;
 	}
@@ -227,4 +235,18 @@ public class ChessBoard {
 		System.out.println("attack: " + piece.getClass());
 		board[move.getFinalX()][move.getFinalY()].setPiece(null);
 	}
+
+	public boolean isGameOver(ChessBoard board) {
+		if (checkMate()) {
+			return true;
+			// set Winner
+		}
+		return false;
+	}
+
+	private boolean checkMate() {
+		// if no valid move for general return true
+		return false;
+	}
+
 }

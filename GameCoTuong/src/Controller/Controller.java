@@ -6,6 +6,7 @@ import View.GameView;
 import javax.swing.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.List;
 
 public class Controller implements MouseListener {
 	private ChessBoard gBoard;
@@ -56,6 +57,11 @@ public class Controller implements MouseListener {
 					if (gBoard.isMakeLegalMove(move)) {
 						view.updateView();
 						System.out.println("Move performed: " + move);
+						// After making a move, calculate and display the best moves
+						AIMove aiMove = new AIMove();
+						Move bestMove = aiMove.getBestMove(gBoard.isPlayer1Turn(), gBoard, 3);
+						
+
 					} else {
 						System.out.println("Invalid move: " + move);
 					}
