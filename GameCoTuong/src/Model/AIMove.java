@@ -5,21 +5,21 @@ import java.util.List;
 
 public class AIMove {
 
-	public int hueristic(ChessBoard board) {
-		int advantageValue = 0; // số dương -> đỏ ,âm -> đen có lợi thế
-//		advantage = ?;
-		return advantageValue;
-	}
+//	public int hueristic(ChessBoard board) {
+//		int advantageValue = 0; // số dương -> đỏ ,âm -> đen có lợi thế
+////		advantage = ?;
+//		return advantageValue;
+//	}
 
 	public int minimax(boolean isRed, ChessBoard board, int depth) {
 		if (depth == 0)
-			return hueristic(board);
+			return board.heuristic();
 		if (isRed) {// red turn
 			int tmp = -999999999;
 			List<Move> possibleMoves = makeRandomMoves(board, true);// tạo danh sách các nước đi hợp lệ của quân đỏ
 			for (Move move : possibleMoves) {// duyệt danh sách nước đi lấy nước con
 				ChessBoard branchBoard = simulateMove(board, move);// tạo bàn cờ giả lập nước đi nhánh con
-				int advantageValue = minimax(false, branchBoard, depth--);// đệ quy tính giá trị lợi thế nước con
+				int advantageValue = minimax(false, branchBoard, depth-1);// đệ quy tính giá trị lợi thế nước con
 				if (advantageValue > tmp) {
 					tmp = advantageValue;
 				}
@@ -30,7 +30,7 @@ public class AIMove {
 			List<Move> possibleMoves = makeRandomMoves(board, false);// quân đen
 			for (Move move : possibleMoves) {
 				ChessBoard branchBoard = simulateMove(board, move);
-				int advantageValue = minimax(true, branchBoard, depth--);
+				int advantageValue = minimax(true, branchBoard, depth-1);
 
 				if (advantageValue < tmp) {
 					tmp = advantageValue;
@@ -41,7 +41,7 @@ public class AIMove {
 	}
 
 	private ChessBoard simulateMove(ChessBoard board, Move move) {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 
@@ -86,7 +86,7 @@ public class AIMove {
 	 * @param depth
 	 * @return
 	 */
-	public Move getBestMove(boolean isRed, ChessBoard board, int depth) {
+	public void getBestMove(boolean isRed, ChessBoard board, int depth) {
 	    Move bestMove = null;
 	    int tmp;
 	    if(isRed) tmp = -999999999;
@@ -108,7 +108,6 @@ public class AIMove {
 	        }
 	    }
 
-	    return bestMove;
 	}
 
 }

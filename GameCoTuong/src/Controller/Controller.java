@@ -59,7 +59,7 @@ public class Controller implements MouseListener {
 						System.out.println("Move performed: " + move);
 						// After making a move, calculate and display the best moves
 						AIMove aiMove = new AIMove();
-						Move bestMove = aiMove.getBestMove(gBoard.isPlayer1Turn(), gBoard, 3);
+						aiMove.getBestMove(gBoard.isPlayer1Turn(), gBoard, 3);
 						
 
 					} else {

@@ -13,18 +13,22 @@ public class Soldier extends ChessPiece {
 		listCanMove = new ArrayList<>();
 
 	}
+
 	@Override
 	protected void UpDateListCanMove(int i, int j, Tile[][] board) {
 		// TODO Auto-generated method stub
 		listCanMove.clear();
 		boolean isCrossed = false;
 		if (this.color) {
-			listCanMove.add(board[i][j + 1]);
+			if (j + 1 < board[0].length)
+				listCanMove.add(board[i][j + 1]);
+
 			if (j > 5)
 				isCrossed = true;
 
 		} else {
-			listCanMove.add(board[i][j - 1]);
+			if (j - 1 > 0)
+				listCanMove.add(board[i][j - 1]);
 			if (j < 5)
 				isCrossed = true;
 

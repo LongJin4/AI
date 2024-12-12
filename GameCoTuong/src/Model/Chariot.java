@@ -22,15 +22,17 @@ public class Chariot extends ChessPiece {
 				if (board[k][j].getPiece() == null) {
 					listCanMove.add(board[k][j]);
 				} else {
+					listCanMove.add(board[k][j]);
 					break;
 				}
 			}
 		}
-		if (i - 1 > 0) {
+		if (i - 1 >= 0) {
 			for (int k = i - 1; k >= 0; k--) {
 				if (board[k][j].getPiece() == null) {
 					listCanMove.add(board[k][j]);
 				} else {
+					listCanMove.add(board[k][j]);
 					break;
 				}
 			}
@@ -40,15 +42,17 @@ public class Chariot extends ChessPiece {
 				if (board[i][k].getPiece() == null) {
 					listCanMove.add(board[i][k]);
 				} else {
+					listCanMove.add(board[i][k]);
 					break;
 				}
 			}
 		}
-		if (j - 1 > 0) {
+		if (j - 1 >= 0) {
 			for (int k = j - 1; k >= 0; k--) {
 				if (board[i][k].getPiece() == null) {
 					listCanMove.add(board[i][k]);
 				} else {
+					listCanMove.add(board[i][k]);
 					break;
 				}
 			}

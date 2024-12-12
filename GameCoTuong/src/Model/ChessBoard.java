@@ -218,8 +218,8 @@ public class ChessBoard {
 			totalBlack += piece.heuristic();
 		}
 		int res = 0;
-		res = (isPlayer1Turn == true) ? (totalRed - totalBlack) : (totalBlack - totalRed);
-		System.out.println(res);
+		res = totalRed-totalBlack;
+		System.out.println(res+" red");
 		return res;
 
 	}
@@ -248,5 +248,4 @@ public class ChessBoard {
 		// if no valid move for general return true
 		return false;
 	}
-
 }
