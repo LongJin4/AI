@@ -6,11 +6,25 @@ import java.util.List;
 public class Horse extends ChessPiece {
 	private int value = 30;
 	private List<Tile> listCanMove;
+	int[][] horse_heuristic = {
+		    {2, 3, 4, 4, 4, 4, 4, 3, 2},
+		    {3, 4, 6, 6, 6, 6, 6, 4, 3},
+		    {4, 6, 8, 8, 8, 8, 8, 6, 4},
+		    {4, 6, 8, 10, 10, 10, 8, 6, 4},
+		    {4, 6, 8, 10, 12, 10, 8, 6, 4},
+		    {4, 6, 8, 10, 10, 10, 8, 6, 4},
+		    {4, 6, 8, 8, 8, 8, 8, 6, 4},
+		    {3, 4, 6, 6, 6, 6, 6, 4, 3},
+		    {2, 3, 4, 4, 4, 4, 4, 3, 2},
+		    {2, 2, 3, 3, 3, 3, 3, 2, 2}
+		};
+	int position_avantage;
 
 	public Horse(boolean color) {
 		super(color);
 		this.type = "Horse";
 		listCanMove = new ArrayList<>();
+		position_avantage=0;
 	}
 
 	@Override
@@ -40,9 +54,18 @@ public class Horse extends ChessPiece {
 				// Kiểm tra nếu ô mới nằm trong giới hạn bàn cờ
 				if (isInBounds(newI, newJ, boardHeight, boardWidth)) {
 					// Kiểm tra nếu ô mới hợp lệ (trống hoặc có quân đối phương)
-					listCanMove.add(board[newI][newJ]);
+					if (board[newI][newJ].getPiece()==null) {
+						listCanMove.add(board[newI][newJ]);
+						position_avantage= horse_heuristic[newJ][newI];
+					} else {
+						if(board[newI][newJ].getPiece().color!=color) {
+							listCanMove.add(board[newI][newJ]);
+							position_avantage= horse_heuristic[newJ][newI];
+						}
+					}
+					
 				}
-			} 
+			}
 		}
 	}
 
@@ -60,6 +83,18 @@ public class Horse extends ChessPiece {
 	protected List<Tile> getListCanmove() {
 		// TODO Auto-generated method stub
 		return listCanMove;
+	}
+
+	@Override
+	public ChessPiece clone() {
+		// TODO Auto-generated method stub
+		return new Horse(color);
+	}
+
+	@Override
+	public int getPosition_avantage() {
+		// TODO Auto-generated method stub
+		return position_avantage;
 	}
 
 }

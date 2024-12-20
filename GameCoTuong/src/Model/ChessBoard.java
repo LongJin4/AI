@@ -12,7 +12,7 @@ import javax.imageio.ImageIO;
 public class ChessBoard {
 	public static final int PLAYER1_WINS = 1;
 	public static final int PLAYER2_WINS = 2;
-	public boolean isPlayer1Turn; // Track whose turn it is
+	public boolean isPlayer1Turn,endgame; // Track whose turn it is
 	Tile[][] board;
 	public static int marginTop = 33;// đệm 1 khoảng lên trên để hiển thị đúng vị trí trên bàn cờ
 	public static int marginLeft = 99;// đệm 1 khoảng vào bên trái để hiển thị đúng vị trí trên bàn cờ
@@ -20,6 +20,14 @@ public class ChessBoard {
 	private int tilesize;
 	List<ChessPiece> listPieceRedAlive, listPieceBlAlive;
 	File image;
+	
+	public ChessBoard(Tile[][] board, List<ChessPiece> listPieceBlAlive, List<ChessPiece> listPieceRedAlive) {
+		super();
+		this.board = board;
+		this.listPieceBlAlive=listPieceBlAlive;
+		this.listPieceRedAlive=listPieceRedAlive;
+		image = new File("src\\Board_Image\\Xiangqi_board.png");
+	}
 
 	public ChessBoard(int x, int y) {
 		super();
@@ -144,10 +152,12 @@ public class ChessBoard {
 	 * @param move
 	 */
 	void doMove(Move move) {
-		ChessPiece curr = board[move.getOriginX()][move.getOriginY()].getPiece();
+		ChessPiece curr = board[move.getOriginX()][move.getOriginY()].getPiece();		
 		this.board[move.getFinalX()][move.getFinalY()].setPiece(curr);
 		this.board[move.getOriginX()][move.getOriginY()].setPiece(null);
+		toggleTurn();
 		updatePiece();
+	
 	}
 
 	private void updatePiece() {
@@ -173,7 +183,7 @@ public class ChessBoard {
 		ChessPiece curr = board[move.getOriginX()][move.getOriginY()].getPiece();
 		if (moveChecker.isLegal() && ((isPlayer1Turn == curr.getColor()))) {
 			doMove(move);
-			toggleTurn();
+			
 			return true;
 		}
 
@@ -190,6 +200,22 @@ public class ChessBoard {
 
 	public void setPlayer1Turn(boolean isPlayer1Turn) {
 		this.isPlayer1Turn = isPlayer1Turn;
+	}
+
+	public List<ChessPiece> getListPieceRedAlive() {
+		return listPieceRedAlive;
+	}
+
+	public void setListPieceRedAlive(List<ChessPiece> listPieceRedAlive) {
+		this.listPieceRedAlive = listPieceRedAlive;
+	}
+
+	public List<ChessPiece> getListPieceBlAlive() {
+		return listPieceBlAlive;
+	}
+
+	public void setListPieceBlAlive(List<ChessPiece> listPieceBlAlive) {
+		this.listPieceBlAlive = listPieceBlAlive;
 	}
 
 	public void setBoard(Tile[][] board) {
@@ -217,9 +243,9 @@ public class ChessBoard {
 		for (ChessPiece piece : listPieceBlAlive) {
 			totalBlack += piece.heuristic();
 		}
-		int res = 0;
-		res = totalRed-totalBlack;
-		System.out.println(res+" red");
+//		int res = totalRed-totalBlack;
+		
+		int res=totalBlack -totalRed;
 		return res;
 
 	}
@@ -227,16 +253,17 @@ public class ChessBoard {
 	public void attack(Move move) {
 		// TODO Auto-generated method stub
 		ChessPiece piece = board[move.getFinalX()][move.getFinalY()].getPiece();
+		if(piece instanceof General) {endgame=true;
+		System.out.println("end");}
 		if (piece.color) {
 			listPieceRedAlive.remove(piece);
 		} else {
 			listPieceBlAlive.remove(piece);
 		}
-		System.out.println("attack: " + piece.getClass());
 		board[move.getFinalX()][move.getFinalY()].setPiece(null);
 	}
 
-	public boolean isGameOver(ChessBoard board) {
+	public boolean isGameOver() {
 		if (checkMate()) {
 			return true;
 			// set Winner
@@ -246,6 +273,28 @@ public class ChessBoard {
 
 	private boolean checkMate() {
 		// if no valid move for general return true
-		return false;
+		return endgame;
+	}
+	public ChessBoard clone() {
+		Tile[][]copyboard= new Tile[9][10];
+		List<ChessPiece> listRedCopy= new ArrayList<>();
+		List<ChessPiece> listBlackCopy= new ArrayList<>();
+		for (int i = 0; i < copyboard.length; i++) {
+			for (int j = 0; j < copyboard[0].length; j++) {
+				// tọa độ x,y sao cho khớp 1 ô là vị trí quân trên đường của bàn cờ
+				int x = i * tilesize + marginTop - tilesize / 2;
+				int y = j * tilesize + marginLeft - tilesize / 2;
+				copyboard[i][j] = new Tile(x, y, tilesize);
+				if(board[i][j].getPiece()!=null) {
+					copyboard[i][j].setPiece(board[i][j].getPiece().clone());
+					if (board[i][j].getPiece().color) {
+						listRedCopy.add(board[i][j].getPiece());
+					} else {
+						listBlackCopy.add(board[i][j].getPiece());
+					}
+				}
+			}
+		}
+		return new ChessBoard(copyboard, listRedCopy, listBlackCopy);
 	}
 }

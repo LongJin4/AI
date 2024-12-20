@@ -7,22 +7,16 @@ import java.util.List;
 public class Cannon extends ChessPiece {
 	private int value = 35;
 	private List<Tile> listCanMove;
-	int[][] cannonPositionAdvantage = {
-		    {1, 0, 1, 0, 2, 0, 1, 0, 1}, // Hàng 0: Các góc cho đường bắn
-		    {0, 1, 0, 0, 2, 0, 0, 1, 0}, // Hàng 1: Hỗ trợ trung lộ
-		    {0, 0, 0, 0, 1, 0, 0, 0, 0}, // Hàng 2: Trống để di chuyển
-		    {0, 1, 0, 0, 1, 0, 0, 1, 0}, // Hàng 3: Vị trí bắn phá tốt
-		    {0, 0, 0, 0, 1, 0, 0, 0, 0}, // Hàng 4: Hỗ trợ di chuyển
-		    {0, 0, 0, 0, 1, 0, 0, 0, 0}, // Hàng 5: Hỗ trợ di chuyển
-		    {0, 1, 0, 0, 1, 0, 0, 1, 0}, // Hàng 6: Vị trí bắn phá tốt
-		    {0, 0, 0, 0, 2, 0, 0, 0, 0}, // Hàng 7: Trung lộ cho Pháo
-		    {1, 0, 1, 0, 2, 0, 1, 0, 1}, // Hàng 8: Vị trí khởi đầu và thuận lợi
-		    {0, 0, 0, 0, 1, 0, 0, 0, 0}, // Hàng 9: Bảo vệ vùng Tướng
-		};
+	int[][] cannon_table = { { 3, 3, 3, 3, 3, 3, 3, 3, 3 }, { 4, 4, 4, 4, 5, 5, 4, 4, 4 },
+			{ 5, 5, 6, 6, 6, 6, 6, 5, 5 }, { 6, 6, 7, 8, 8, 8, 7, 6, 6 }, { 6, 6, 7, 8, 8, 8, 7, 6, 6 },
+			{ 5, 5, 6, 6, 6, 6, 6, 5, 5 }, { 4, 4, 4, 4, 5, 5, 4, 4, 4 }, { 3, 3, 3, 3, 3, 3, 3, 3, 3 },
+			{ 3, 3, 3, 3, 3, 3, 3, 3, 3 }, { 3, 3, 3, 3, 3, 3, 3, 3, 3 } };
+	int position_avantage;
 	public Cannon(boolean color) {
 		super(color);
 		this.type = "Cannon";
 		listCanMove = new ArrayList<>();
+		position_avantage=0;
 	}
 
 	@Override
@@ -33,10 +27,17 @@ public class Cannon extends ChessPiece {
 		if (i + 1 < board.length) {
 			for (int k = i + 1; k < board.length; k++) {
 				if (board[k][j].getPiece() == null) {
-					listCanMove.add(board[k][j]);
-				} else {
-					if (countUP == 1 && (board[k][j].getPiece().color != this.color)) {
+					if (countUP == 0) {
 						listCanMove.add(board[k][j]);
+						position_avantage= cannon_table[j][k];
+					}
+				} else {
+					if (countUP == 1) {
+						if ((board[k][j].getPiece().color != this.color)) {
+							listCanMove.add(board[k][j]);
+							position_avantage= cannon_table[j][k];
+							countUP = 0;
+						}
 						break;
 					}
 					countUP++;
@@ -47,11 +48,17 @@ public class Cannon extends ChessPiece {
 		if (i - 1 >= 0) {
 			for (int k = i - 1; k >= 0; k--) {
 				if (board[k][j].getPiece() == null) {
-					listCanMove.add(board[k][j]);
+					if (countDown == 0) {
+						listCanMove.add(board[k][j]);
+						position_avantage= cannon_table[j][k];
+					}
 				} else {
 					if (countDown == 1) {
-						System.out.println("dcm");
-						listCanMove.add(board[k][j]);
+						if (board[k][j].getPiece().color != this.color) {
+							listCanMove.add(board[k][j]);
+							position_avantage= cannon_table[j][k];
+							countDown = 0;
+						}
 						break;
 					}
 					countDown++;
@@ -61,10 +68,17 @@ public class Cannon extends ChessPiece {
 		if (j + 1 < board[0].length) {
 			for (int k = j + 1; k < board[0].length; k++) {
 				if (board[i][k].getPiece() == null) {
-					listCanMove.add(board[i][k]);
+					if (countLeft == 0) {
+						listCanMove.add(board[i][k]);
+						position_avantage= cannon_table[k][i];
+					}
 				} else {
 					if (countLeft == 1) {
-						listCanMove.add(board[i][k]);
+						if (board[i][k].getPiece().color != this.color) {
+							listCanMove.add(board[i][k]);
+							position_avantage= cannon_table[k][i];
+							countLeft = 0;
+						}
 						break;
 					}
 					countLeft++;
@@ -75,13 +89,19 @@ public class Cannon extends ChessPiece {
 		if (j - 1 >= 0) {
 			for (int k = j - 1; k >= 0; k--) {
 				if (board[i][k].getPiece() == null) {
-					listCanMove.add(board[i][k]);
+					if (countRight == 0) {
+						listCanMove.add(board[i][k]);
+						position_avantage= cannon_table[k][i];
+					}
 				} else {
 					if (countRight == 1) {
-						listCanMove.add(board[i][k]);
+						if (board[i][k].getPiece().color != this.color) {
+							listCanMove.add(board[i][k]);
+							position_avantage= cannon_table[k][i];
+							countRight = 0;
+						}
 						break;
 					}
-
 					countRight++;
 
 				}
@@ -92,7 +112,7 @@ public class Cannon extends ChessPiece {
 	@Override
 	public int getValue() {
 		// TODO Auto-generated method stub
-		return value ;
+		return value;
 	}
 
 	@Override
@@ -101,5 +121,15 @@ public class Cannon extends ChessPiece {
 		return listCanMove;
 	}
 
+	@Override
+	public ChessPiece clone() {
+		// TODO Auto-generated method stub
+		return new Cannon(color);
+	}
 
+	@Override
+	public int getPosition_avantage() {
+		// TODO Auto-generated method stub
+		return position_avantage;
+	}
 }

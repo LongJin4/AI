@@ -25,14 +25,11 @@ public abstract class ChessPiece {
 	 */
 	public void checkPattern(Move move, Tile[][] board) {
 		if (this.getListCanmove().contains(board[move.getFinalX()][move.getFinalY()])) {
-			this.setValue( move.getFinalX(), move.getFinalY());
 			move.setValid(true);
 		} else {
 			move.setValid(false);
 		}
 	}
-
-	protected abstract void setValue(int finalX, int finalY);
 
 	protected abstract List<Tile> getListCanmove();
 
@@ -96,9 +93,11 @@ public abstract class ChessPiece {
 			if (tile.getPiece() != null)
 				res += (tile.getPiece().getValue()) / 2;
 		}
-		return this.getValue() + res;
+		return this.getValue() + res+getPosition_avantage();
 	}
 
-	protected abstract void UpDateListCanMove(int i, int j, Tile[][] board);
+	public abstract int getPosition_avantage();
 
+	protected abstract void UpDateListCanMove(int i, int j, Tile[][] board);
+	public abstract ChessPiece clone();
 }

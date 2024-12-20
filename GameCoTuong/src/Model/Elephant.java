@@ -26,18 +26,18 @@ public class Elephant extends ChessPiece {
 				listCanMove.add(board[left][down]);
 			if (up <= 5 && left >= 0)
 				listCanMove.add(board[left][up]);
-			if (down >= 0 && right <= board[0].length)
+			if (down >= 0 && right <= board.length)
 				listCanMove.add(board[right][down]);
-			if (up <= 5 && right <= board[0].length)
+			if (up <= 5 && right <= board.length)
 				listCanMove.add(board[right][up]);
 		} else {
 			if (down>= 5 && left >= 0)
 				listCanMove.add(board[left][down]);
 			if (up <= 9 && left >= 0)
 				listCanMove.add(board[left][up]);
-			if (down >= 5 && right<= board[0].length)
-				listCanMove.add(board[right][down]);
-			if (up <= 9 && right <= board[0].length)
+			if (down >= 5 && right<= board.length) {
+				listCanMove.add(board[right][down]);}
+			if (up <= 9 && right <= board.length)
 				listCanMove.add(board[right][up]);
 		}
 	}
@@ -52,5 +52,17 @@ public class Elephant extends ChessPiece {
 	protected List<Tile> getListCanmove() {
 		// TODO Auto-generated method stub
 		return listCanMove;
+	}
+
+	@Override
+	public ChessPiece clone() {
+		// TODO Auto-generated method stub
+		return new Elephant(color);
+	}
+
+	@Override
+	public int getPosition_avantage() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 }

@@ -20,55 +20,55 @@ public class General extends ChessPiece {
 	}
 
 	@Override
-
-	public void checkPattern(Move move, Tile[][] board) {
-
-		super.checkPattern(move, board);
-		if (!move.isHorizontal() && !move.isVertical()) {
-			move.setValid(false);
+	protected void UpDateListCanMove(int i, int j, Tile[][] board) {
+		// TODO Auto-generated method stub
+		listCanMove.clear();
+		if (i + 1 <= 5) {
+			addAttack(i+1,j,board);
+			listCanMove.add(board[i + 1][j]);
 		}
-		if (Math.abs(move.getDx()) > 1 || Math.abs(move.getDy()) > 1) {
-			move.setValid(false);
-		}
-
-		// stays in generals quarters
-		if (move.getFinalX() < 3 || move.getFinalX() > 5) {
-			move.setValid(false);
+		if (i - 1 >= 3) {
+			addAttack(i-1,j,board);
+			listCanMove.add(board[i - 1][j]);
 		}
 
 		if (this.color) {
-			if (move.getFinalY() > 2) {
-				move.setValid(false);
+
+			if (j - 1 >= 0) {
+				addAttack(i,j-1,board);
+				listCanMove.add(board[i][j - 1]);
+			}
+			if (j + 1 <= 2) {
+				addAttack(i,j+1,board);
+				listCanMove.add(board[i][j + 1]);
 			}
 		} else {
-			if (move.getFinalY() < 7) {
-				move.setValid(false);
+
+			if (j - 1 >= 7) {
+				addAttack(i,j-1,board);
+				listCanMove.add(board[i][j - 1]);
+			}
+			if (j + 1 <= 9) {
+				addAttack(i,j+1,board);
+				listCanMove.add(board[i][j + 1]);
+			}
+		}
+		// check face to face general
+		if (this.color) {
+			for (int k = i; k < board.length; k++) {
+				if (board[k][j].getPiece() != null) {
+					if (board[k][j].getPiece() instanceof General) {
+						listCanMove.add(board[k][j]);
+					}
+					break;
+				}
 			}
 		}
 	}
 
-	@Override
-	protected void UpDateListCanMove(int i, int j, Tile[][] board) {
-		// TODO Auto-generated method stub
-		listCanMove.clear();
-		if (i + 1 <= 5)
-			listCanMove.add(board[i + 1][j]);
-		if (i - 1 >= 3)
-			listCanMove.add(board[i - 1][j]);
-		
-		if (this.color) {
-			
-			if (j - 1 >= 0)
-				listCanMove.add(board[i][j - 1]);
-			if (j + 1 <= 2)
-				listCanMove.add(board[i][j + 1]);
-		} else {
-			
-			if (j - 1 >= 7)
-				listCanMove.add(board[i][j - 1]);
-			if (j + 1 <= 9)
-				listCanMove.add(board[i][j + 1]);
-		}
+	private void addAttack(int i, int j, Tile[][] board) {
+		if(board[i][j].getPiece()!=null&&board[i][j].getPiece().color!=color)
+			listCanMove.add(board[i][j]);
 	}
 
 	@Override
@@ -81,5 +81,17 @@ public class General extends ChessPiece {
 	protected List<Tile> getListCanmove() {
 		// TODO Auto-generated method stub
 		return listCanMove;
+	}
+
+	@Override
+	public ChessPiece clone() {
+		// TODO Auto-generated method stub
+		return new General(color);
+	}
+
+	@Override
+	public int getPosition_avantage() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 }

@@ -20,6 +20,10 @@ public class Tile {
 		this.y = y2;
 	}
 
+	public Tile(int x2, int y2, int size2, Object object) {
+		// TODO Auto-generated constructor stub
+	}
+
 	public int getX() {
 		return x;
 	}
@@ -67,6 +71,10 @@ public class Tile {
 			return false;
 		Tile other = (Tile) obj;
 		return x == other.x && y == other.y;
+	}
+	
+	public Tile clone() {
+	    return new Tile(this.x, this.y, this.size, this.piece != null ? this.piece.clone() : null);
 	}
 
 }

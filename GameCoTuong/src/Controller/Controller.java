@@ -32,38 +32,41 @@ public class Controller implements MouseListener {
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		// Translate screen coordinates to board indices
-		int x = (e.getX() - ChessBoard.marginTop + gBoard.getTileSize() / 2) / gBoard.getTileSize();
-		int y = (e.getY() - ChessBoard.marginLeft + gBoard.getTileSize() / 2) / gBoard.getTileSize();
-
-		if (!pressed) {
-			// First click: store the pressed piece location
-			if (storePressed(x, y)) {
-				pressed = true;
-			}
+		if (gBoard.isGameOver()) {
+			JOptionPane.showMessageDialog(view, "endgame");
 		} else {
-			// Second click: store release location and process move
-			if (storeReleased(x, y)) {
-				// Check if switching selection to another piece of the same side
-				if (gBoard.getTile(pressLoc[0], pressLoc[1]).getPiece() != null
-						&& gBoard.getTile(releaseLoc[0], releaseLoc[1]).getPiece() != null
-						&& gBoard.getTile(pressLoc[0], pressLoc[1]).getPiece().getColor() == gBoard
-								.getTile(releaseLoc[0], releaseLoc[1]).getPiece().getColor()) {
-					storePressed(x, y);
-				} else {
-					// Perform the move
-					pressed = false;
-					Move move = new Move(pressLoc[0], pressLoc[1], releaseLoc[0], releaseLoc[1]);
-					if (gBoard.isMakeLegalMove(move)) {
-						view.updateView();
-						System.out.println("Move performed: " + move);
-						// After making a move, calculate and display the best moves
-						AIMove aiMove = new AIMove();
-						aiMove.getBestMove(gBoard.isPlayer1Turn(), gBoard, 3);
-						
+			// Translate screen coordinates to board indices
+			int x = (e.getX() - ChessBoard.marginTop + gBoard.getTileSize() / 2) / gBoard.getTileSize();
+			int y = (e.getY() - ChessBoard.marginLeft + gBoard.getTileSize() / 2) / gBoard.getTileSize();
 
+			if (!pressed) {
+				// First click: store the pressed piece location
+				if (storePressed(x, y)) {
+					pressed = true;
+				}
+			} else {
+				// Second click: store release location and process move
+				if (storeReleased(x, y)) {
+					// Check if switching selection to another piece of the same side
+					if (gBoard.getTile(pressLoc[0], pressLoc[1]).getPiece() != null
+							&& gBoard.getTile(releaseLoc[0], releaseLoc[1]).getPiece() != null
+							&& gBoard.getTile(pressLoc[0], pressLoc[1]).getPiece().getColor() == gBoard
+									.getTile(releaseLoc[0], releaseLoc[1]).getPiece().getColor()) {
+						storePressed(x, y);
 					} else {
-						System.out.println("Invalid move: " + move);
+						// Perform the move
+						pressed = false;
+						Move move = new Move(pressLoc[0], pressLoc[1], releaseLoc[0], releaseLoc[1]);
+						if (gBoard.isMakeLegalMove(move)) {
+							view.updateView();
+							System.out.println("Move performed: " + move);
+							// After making a move, calculate and display the best moves
+							AIMove aiMove = new AIMove();
+							aiMove.getBestMove(gBoard.isPlayer1Turn(), gBoard, 3);
+
+						} else {
+
+						}
 					}
 				}
 			}

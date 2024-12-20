@@ -13,18 +13,16 @@ public class Advisor extends ChessPiece {
 		listCanMove = new ArrayList<>();
 	}
 
-	
-
 	@Override
 	protected void UpDateListCanMove(int i, int j, Tile[][] board) {
 		// TODO Auto-generated method stub
 		listCanMove.clear();
-		int up=j+1;
-		int down=j-1;
-		int left=i-1;
-		int right=i+1;
+		int up = j + 1;
+		int down = j - 1;
+		int left = i - 1;
+		int right = i + 1;
 		if (this.color) {
-			if (down >= 0 &&left >= 3)
+			if (down >= 0 && left >= 3)
 				listCanMove.add(board[left][down]);
 			if (up <= 2 && left >= 3)
 				listCanMove.add(board[left][up]);
@@ -33,11 +31,11 @@ public class Advisor extends ChessPiece {
 			if (up <= 2 && right <= 5)
 				listCanMove.add(board[right][up]);
 		} else {
-			if (down>= 7 && left >= 3)
+			if (down >= 7 && left >= 3)
 				listCanMove.add(board[left][down]);
 			if (up <= 9 && left >= 3)
 				listCanMove.add(board[left][up]);
-			if (down >= 7 && right<= 5)
+			if (down >= 7 && right <= 5)
 				listCanMove.add(board[right][down]);
 			if (up <= 9 && right <= 5)
 				listCanMove.add(board[right][up]);
@@ -54,6 +52,18 @@ public class Advisor extends ChessPiece {
 	protected List<Tile> getListCanmove() {
 		// TODO Auto-generated method stub
 		return listCanMove;
+	}
+
+	@Override
+	public ChessPiece clone() {
+		// TODO Auto-generated method stub
+		return new Advisor(color);
+	}
+
+	@Override
+	public int getPosition_avantage() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }
