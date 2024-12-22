@@ -275,6 +275,7 @@ public class ChessBoard {
 		// if no valid move for general return true
 		return endgame;
 	}
+//	sao chép bàn cờ thành 1 bàn cờ mới(deep copy)
 	public ChessBoard clone() {
 		Tile[][]copyboard= new Tile[9][10];
 		List<ChessPiece> listRedCopy= new ArrayList<>();

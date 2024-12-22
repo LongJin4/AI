@@ -30,7 +30,7 @@ public abstract class ChessPiece {
 			move.setValid(false);
 		}
 	}
-
+// lấy danh sách các vị trí hợp lệ
 	protected abstract List<Tile> getListCanmove();
 
 	public abstract int getValue();
@@ -86,7 +86,7 @@ public abstract class ChessPiece {
 	public boolean getColor() {
 		return this.color;
 	}
-
+// lấy heuristic của quân cờ
 	protected int heuristic() {
 		int res = 0;
 		for (Tile tile : this.getListCanmove()) {
@@ -95,9 +95,10 @@ public abstract class ChessPiece {
 		}
 		return this.getValue() + res+getPosition_avantage();
 	}
-
+// tính toán lợi thế cuar vị trí
 	public abstract int getPosition_avantage();
-
+// cập nhật lại danh sách các vị trí hợp lệ
 	protected abstract void UpDateListCanMove(int i, int j, Tile[][] board);
+//	sao chép quân cờ (deep copy)
 	public abstract ChessPiece clone();
 }

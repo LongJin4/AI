@@ -64,8 +64,6 @@ public class Controller implements MouseListener {
 							AIMove aiMove = new AIMove();
 							aiMove.getBestMove(gBoard.isPlayer1Turn(), gBoard, 3);
 
-						} else {
-
 						}
 					}
 				}

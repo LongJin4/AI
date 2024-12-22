@@ -23,22 +23,32 @@ public class Advisor extends ChessPiece {
 		int right = i + 1;
 		if (this.color) {
 			if (down >= 0 && left >= 3)
-				listCanMove.add(board[left][down]);
+				addmove(left,down,board);
 			if (up <= 2 && left >= 3)
-				listCanMove.add(board[left][up]);
+				addmove(left,up,board);
 			if (down >= 0 && right <= 5)
-				listCanMove.add(board[right][down]);
+				addmove(right,down,board);
 			if (up <= 2 && right <= 5)
-				listCanMove.add(board[right][up]);
+				addmove(right,up,board);
 		} else {
 			if (down >= 7 && left >= 3)
-				listCanMove.add(board[left][down]);
+				addmove(left,down,board);
 			if (up <= 9 && left >= 3)
-				listCanMove.add(board[left][up]);
+				addmove(left,up,board);
 			if (down >= 7 && right <= 5)
-				listCanMove.add(board[right][down]);
+				addmove(right,down,board);
 			if (up <= 9 && right <= 5)
-				listCanMove.add(board[right][up]);
+				addmove(right,up,board);
+		}
+	}
+// thêm 1 nước đi hợp lệ nếu ô đó không có quân cờ nào hoặc tồn tại quân cờ đối phương
+	private void addmove(int i, int j, Tile[][] board) {
+		// TODO Auto-generated method stub
+		if (board[i][j].getPiece() == null) {
+			listCanMove.add(board[i][j]);
+		} else {
+			if (board[i][j].getPiece().color != color)
+				listCanMove.add(board[i][j]);
 		}
 	}
 

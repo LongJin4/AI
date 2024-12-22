@@ -24,33 +24,33 @@ public class General extends ChessPiece {
 		// TODO Auto-generated method stub
 		listCanMove.clear();
 		if (i + 1 <= 5) {
-			addAttack(i+1,j,board);
-			listCanMove.add(board[i + 1][j]);
+			addMove(i + 1, j, board);
+			
 		}
 		if (i - 1 >= 3) {
-			addAttack(i-1,j,board);
-			listCanMove.add(board[i - 1][j]);
+			addMove(i - 1, j, board);
+			
 		}
 
 		if (this.color) {
 
 			if (j - 1 >= 0) {
-				addAttack(i,j-1,board);
-				listCanMove.add(board[i][j - 1]);
+				addMove(i, j - 1, board);
+				
 			}
 			if (j + 1 <= 2) {
-				addAttack(i,j+1,board);
-				listCanMove.add(board[i][j + 1]);
+				addMove(i, j + 1, board);
+				
 			}
 		} else {
 
 			if (j - 1 >= 7) {
-				addAttack(i,j-1,board);
-				listCanMove.add(board[i][j - 1]);
+				addMove(i, j - 1, board);
+				
 			}
 			if (j + 1 <= 9) {
-				addAttack(i,j+1,board);
-				listCanMove.add(board[i][j + 1]);
+				addMove(i, j + 1, board);
+			
 			}
 		}
 		// check face to face general
@@ -65,10 +65,14 @@ public class General extends ChessPiece {
 			}
 		}
 	}
-
-	private void addAttack(int i, int j, Tile[][] board) {
-		if(board[i][j].getPiece()!=null&&board[i][j].getPiece().color!=color)
+	// thêm 1 nước đi hợp lệ nếu ô đó không có quân cờ nào hoặc tồn tại quân cờ đối phương
+	private void addMove(int i, int j, Tile[][] board) {
+		if (board[i][j].getPiece() == null) {
 			listCanMove.add(board[i][j]);
+		} else {
+			if (board[i][j].getPiece().color != color)
+				listCanMove.add(board[i][j]);
+		}
 	}
 
 	@Override
@@ -76,19 +80,19 @@ public class General extends ChessPiece {
 		// TODO Auto-generated method stub
 		return value;
 	}
-
+//	danh sách nước đi hợp lệ của quân cờ
 	@Override
 	protected List<Tile> getListCanmove() {
 		// TODO Auto-generated method stub
 		return listCanMove;
 	}
-
+// sao chép quân cờ mới
 	@Override
 	public ChessPiece clone() {
 		// TODO Auto-generated method stub
 		return new General(color);
 	}
-
+// tính toán xem vị trí có lợi thế không
 	@Override
 	public int getPosition_avantage() {
 		// TODO Auto-generated method stub

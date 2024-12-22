@@ -26,7 +26,7 @@ public class Soldier extends ChessPiece {
 		boolean isCrossed = false;
 		if (this.color) {
 			if (j + 1 < board[0].length) {
-				listCanMove.add(board[i][j + 1]);
+				addMove(i, j+1, board);
 				position_avantage = solider_table[j + 1][i];
 			}
 			if (j > 5)
@@ -34,7 +34,7 @@ public class Soldier extends ChessPiece {
 
 		} else {
 			if (j - 1 > 0) {
-				listCanMove.add(board[i][j - 1]);
+				addMove(i, j-1, board);
 				position_avantage = solider_table[j - 1][i];
 			}
 			if (j < 5)
@@ -43,16 +43,24 @@ public class Soldier extends ChessPiece {
 		}
 		if (isCrossed) {
 			if (i + 1 < 9) {
-				listCanMove.add(board[i + 1][j]);
+				addMove(i+1, j, board);
 				position_avantage = solider_table[j][i + 1];
 			}
 			if (i - 1 > 0) {
-				listCanMove.add(board[i - 1][j]);
+				addMove(i-1, j, board);
 				position_avantage = solider_table[j][i - 1];
 			}
 		}
 	}
-
+	// thêm 1 nước đi hợp lệ nếu ô đó không có quân cờ nào hoặc tồn tại quân cờ đối phương
+	private void addMove(int i, int j, Tile[][] board) {
+		if (board[i][j].getPiece() == null) {
+			listCanMove.add(board[i][j]);
+		} else {
+			if (board[i][j].getPiece().color != color)
+				listCanMove.add(board[i][j]);
+		}
+	}
 	@Override
 	public int getValue() {
 		// TODO Auto-generated method stub
