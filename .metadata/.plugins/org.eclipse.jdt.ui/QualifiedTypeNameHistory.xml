@@ -22,7 +22,6 @@
     <fullyQualifiedTypeName name="java.util.Arrays"/>
     <fullyQualifiedTypeName name="Model.Advisor"/>
     <fullyQualifiedTypeName name="Model.Horse"/>
-    <fullyQualifiedTypeName name="Model.Elephant"/>
     <fullyQualifiedTypeName name="Model.Tile"/>
     <fullyQualifiedTypeName name="Model.ChessPiece"/>
     <fullyQualifiedTypeName name="java.util.ArrayList"/>
@@ -30,6 +29,7 @@
     <fullyQualifiedTypeName name="Model.Chariot"/>
     <fullyQualifiedTypeName name="Model.Cannon"/>
     <fullyQualifiedTypeName name="Model.Soldier"/>
-    <fullyQualifiedTypeName name="Model.General"/>
     <fullyQualifiedTypeName name="javax.swing.JOptionPane"/>
+    <fullyQualifiedTypeName name="Model.Elephant"/>
+    <fullyQualifiedTypeName name="Model.General"/>
 </qualifiedTypeNameHistroy>

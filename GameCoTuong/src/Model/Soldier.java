@@ -33,7 +33,7 @@ public class Soldier extends ChessPiece {
 				isCrossed = true;
 
 		} else {
-			if (j - 1 > 0) {
+			if (j - 1 >= 0) {
 				addMove(i, j-1, board);
 				position_avantage = solider_table[j - 1][i];
 			}
@@ -46,7 +46,7 @@ public class Soldier extends ChessPiece {
 				addMove(i+1, j, board);
 				position_avantage = solider_table[j][i + 1];
 			}
-			if (i - 1 > 0) {
+			if (i - 1 >= 0) {
 				addMove(i-1, j, board);
 				position_avantage = solider_table[j][i - 1];
 			}
