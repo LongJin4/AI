@@ -133,6 +133,8 @@ public class AIMove {
 	        }
 		}
 		board.doMove(bestMove);
+		
+//		in các giá trị để test
 		int totalRed = 0;
 		int totalBlack = 0;
 		for (ChessPiece piece : board.listPieceRedAlive) {
