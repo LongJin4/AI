@@ -1,35 +1,101 @@
 package Model;
 
-import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
-import javax.imageio.ImageIO;
+public class General extends ChessPiece {
 
-public class General extends ChessPiece{
-	//King
-	File image;
-	String path = "D:\\Java_Project\\AI\\GameCoTuong\\src\\chess_pieces_Image\\";
+	private int value = 10000;
+	private List<Tile> listCanMove;
 
-	public General(int x, int y, int width, int height, boolean color) {
-		super(x, y, width, height, color);
-		// TODO Auto-generated constructor stub
-		if (color) {
-			path += "b";
-		} else {
-			path += "r";
-		}
-		path += "K.png";
-		image = new File(path);
+	public General(boolean color) {
+		super(color);
+		this.type = "General";
+		listCanMove = new ArrayList<>();
 	}
 
 	@Override
-	public void draw(Graphics2D g2) throws IOException {
-		// TODO Auto-generated method stub
-
-		BufferedImage boardImage = ImageIO.read(image);
-		g2.drawImage(boardImage, x, y, width, height, null);
+	public String toString() {
+		return "Vua " + color;
 	}
 
+	@Override
+	protected void UpDateListCanMove(int i, int j, Tile[][] board) {
+		// TODO Auto-generated method stub
+		listCanMove.clear();
+		if (i + 1 <= 5) {
+			addMove(i + 1, j, board);
+			
+		}
+		if (i - 1 >= 3) {
+			addMove(i - 1, j, board);
+			
+		}
+
+		if (this.color) {
+
+			if (j - 1 >= 0) {
+				addMove(i, j - 1, board);
+				
+			}
+			if (j + 1 <= 2) {
+				addMove(i, j + 1, board);
+				
+			}
+		} else {
+
+			if (j - 1 >= 7) {
+				addMove(i, j - 1, board);
+				
+			}
+			if (j + 1 <= 9) {
+				addMove(i, j + 1, board);
+			
+			}
+		}
+		// check face to face general
+		if (this.color) {
+			for (int k = i; k < board.length; k++) {
+				if (board[k][j].getPiece() != null) {
+					if (board[k][j].getPiece() instanceof General) {
+						listCanMove.add(board[k][j]);
+					}
+					break;
+				}
+			}
+		}
+	}
+	// thêm 1 nước đi hợp lệ nếu ô đó không có quân cờ nào hoặc tồn tại quân cờ đối phương
+	private void addMove(int i, int j, Tile[][] board) {
+		if (board[i][j].getPiece() == null) {
+			listCanMove.add(board[i][j]);
+		} else {
+			if (board[i][j].getPiece().color != color)
+				listCanMove.add(board[i][j]);
+		}
+	}
+
+	@Override
+	public int getValue() {
+		// TODO Auto-generated method stub
+		return value;
+	}
+//	danh sách nước đi hợp lệ của quân cờ
+	@Override
+	protected List<Tile> getListCanmove() {
+		// TODO Auto-generated method stub
+		return listCanMove;
+	}
+// sao chép quân cờ mới
+	@Override
+	public ChessPiece clone() {
+		// TODO Auto-generated method stub
+		return new General(color);
+	}
+// tính toán xem vị trí có lợi thế không
+	@Override
+	public int getPosition_avantage() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 }
