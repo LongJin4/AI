@@ -22,24 +22,31 @@ public class Elephant extends ChessPiece {
 		int left=i-2;
 		int right=i+2;
 		System.out.println(i+" "+j);
+		System.out.println(up+"down "+ down+"left "+left+"right "+right);
 		if (this.color) {
-			if (down >= 0 &&left >=0&&board[down+1][left+1].getPiece()==null)
-				addmove(left, down, board);
-			if (up <= 5 && left >= 0&&board[up-1][left+1].getPiece()==null)
+			if (down >= 0 &&left >=0&&board[left+1][down+1].getPiece()==null) {
+				addmove(left, down, board);}
+			if (up <= 5 && left >= 0&&board[left+1][up-1].getPiece()==null)
 				addmove(left, up, board);
-			if (down >= 0 && right <= board.length&&board[down+1][right-1].getPiece()==null)
+			if (down >= 0 && right <= board.length&&board[right-1][down+1].getPiece()==null)
 				addmove(right, down, board);
-			if (up <= 5 && right <= board.length&&board[up-1][right-1].getPiece()==null)
+			if (up <= 5 && right <= board.length&&board[right-1][up-1].getPiece()==null)
 				addmove(right, up, board);
 		} else {
-			if (down>= 5 && left >= 0&&board[down+1][left+1].getPiece()==null)
+			if (down>= 5 && left >= 0&&board[left+1][down+1].getPiece()==null) {
 				addmove(left, down, board);
-			if (up <= 9 && left >= 0&&board[up-1][left+1].getPiece()==null)
-				addmove(left, up, board);;
-			if (down >= 5 && right<= board.length&&board[down+1][right-1].getPiece()==null) {
-				addmove(right, down, board);}
-			if (up <= 9 && right <= board.length&&board[up-1][right-1].getPiece()==null)
+				}
+			if (up <= 9 && left >= 0&&board[left+1][up-1].getPiece()==null) {
+				addmove(left, up, board);}
+			if (down >= 5 && right<= 9&&(board[right-1][down+1].getPiece()==null)) {
+				addmove(right, down, board);
+			}	
+				
+			if (up <= 9 && right <= board.length&&board[right-1][up-1].getPiece()==null) {
 				addmove(right, up, board);
+			
+				}
+				
 		}
 	}
 	// thêm 1 nước đi hợp lệ nếu ô đó không có quân cờ nào hoặc tồn tại quân cờ đối phương

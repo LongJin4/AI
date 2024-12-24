@@ -7,13 +7,7 @@ import java.util.List;
 
 public class AIMove {
 
-//	public int hueristic(ChessBoard board) {
-//		int advantageValue = 0; // số dương -> đỏ ,âm -> đen có lợi thế
-////		advantage = ?;
-//		return advantageValue;
-//	}
-
-	public int minimax(boolean isRed, ChessBoard board, int depth) {
+	public int minimax(boolean isRed, ChessBoard board, int depth, int alpha, int beta) {
 		if (depth == 0)
 			return board.heuristic();
 		if (isRed) {// red turn
@@ -21,10 +15,17 @@ public class AIMove {
 			List<Move> possibleMoves = makeRandomMoves(board, true);// tạo danh sách các nước đi hợp lệ của quân đỏ
 			for (Move move : possibleMoves) {// duyệt danh sách nước đi lấy nước con
 				ChessBoard branchBoard = simulateMove(board, move);// tạo bàn cờ giả lập nước đi nhánh con
-				int advantageValue = minimax(false, branchBoard, depth - 1);// đệ quy tính giá trị lợi thế nước con
+				int advantageValue = minimax(false, branchBoard, depth - 1, alpha, beta);// đệ quy tính giá trị lợi thế
+																							// nước con
 				if (advantageValue > tmp) {
 					tmp = advantageValue;
+
 				}
+				if (alpha < tmp) {
+					alpha = tmp;
+				}
+				if (beta <= alpha)
+					break;
 			}
 			return tmp;
 		} else {
@@ -32,11 +33,16 @@ public class AIMove {
 			List<Move> possibleMoves = makeRandomMoves(board, false);// quân đen
 			for (Move move : possibleMoves) {
 				ChessBoard branchBoard = simulateMove(board, move);
-				int advantageValue = minimax(true, branchBoard, depth - 1);
+				int advantageValue = minimax(true, branchBoard, depth - 1, alpha, beta);
 
 				if (advantageValue < tmp) {
 					tmp = advantageValue;
 				}
+				if (beta > tmp) {
+					beta = tmp;
+				}
+				if (beta <= alpha)
+					break;
 			}
 			return tmp;
 		}
@@ -56,14 +62,6 @@ public class AIMove {
 		// TODO Auto-generated method stub
 		List<Move> branchMoves = new ArrayList<>();
 		Tile[][] state = board.getBoard();
-//		for (int i = 0; i < state.length; i++) {
-//			for (int j = 0; j < state[i].length; j++) {
-//				ChessPiece piece = state[i][j].getPiece();
-//				if (piece != null && piece.getColor() == isRed) {
-//					branchMoves.addAll(makeLegalMovesList(i, j, board));
-//				}
-//			}
-//		}
 		for (int i = 0; i < state.length; i++) {
 			for (int j = 0; j < state[i].length; j++) {
 				ChessPiece piece = state[i][j].getPiece();
@@ -86,23 +84,6 @@ public class AIMove {
 		return listMove;
 	}
 
-//	private List<Move> makeLegalMovesList(int i, int j, ChessBoard board) {
-//		List<Move> legalMovesList = new ArrayList<>();
-//		Tile[][] state = board.getBoard();
-//		ChessPiece piece = state[i][j].getPiece();
-//		if (piece != null) {
-//			for (int x = 0; x < state.length; x++) {
-//				for (int y = 0; y < state[x].length; y++) {
-//					Move move = new Move(i, j, x, y);
-//					if (board.isMakeLegalMove(move)) { // Kiểm tra nước đi hợp lệ
-//						legalMovesList.add(move);
-//					}
-//				}
-//			}
-//		}
-//		return legalMovesList;
-//	}
-
 	/**
 	 * lấy nước đi tốt nhất
 	 * 
@@ -112,7 +93,10 @@ public class AIMove {
 	 */
 	public void getBestMove(boolean isRed, ChessBoard board, int depth) {
 		Move bestMove = null;
-		int tmp;
+		long startTime = System.nanoTime(); // Bắt đầu tính thời gian
+		int tmp, bestScore ;
+		int alpha = -999999999;
+		int beta = 999999999;
 		if (isRed)
 			tmp = -999999999;
 		else
@@ -125,13 +109,28 @@ public class AIMove {
 			ChessBoard branchBoard = simulateMove(board, move);
 
 			// Tính giá trị Minimax của nước đi
-			int currentAdvantageValue = minimax(!isRed, branchBoard, depth - 1);
+			int currentAdvantageValue = minimax(!isRed, branchBoard, depth - 1, alpha, beta);
 
 			// Cập nhật nước đi tốt nhất dựa trên giá trị Minimax
 			if ((isRed && currentAdvantageValue > tmp) || (!isRed && currentAdvantageValue < tmp)) {
 				tmp = currentAdvantageValue;
 				bestMove = move;
 			}
+			// Cập nhật giá trị alpha hoặc beta
+	        if (isRed) {
+				if(alpha > tmp) {
+					alpha = tmp;
+				}
+	        } else {
+	            if(beta < tmp) {
+	            	beta = tmp;
+	            }
+	        }
+
+	        // Cắt tỉa nếu cần
+	        if (beta <= alpha) {
+	            break;
+	        }
 		}
 		board.doMove(bestMove);
 		
@@ -144,8 +143,12 @@ public class AIMove {
 		for (ChessPiece piece : board.listPieceBlAlive) {
 			totalBlack += piece.heuristic();
 		}
-		System.out.println("Black "+totalBlack);
-		System.out.println("red "+totalRed);
+		long endTime = System.nanoTime(); // Kết thúc tính thời gian
+		long duration = endTime - startTime; // Tính toán thời gian đã qua
+
+		System.out.println("Best move calculated in: " + (duration / 1_000_000) + " ms");
+		System.out.println("Black " + totalBlack);
+		System.out.println("red " + totalRed);
 		System.out.println(board.heuristic());
 	}
 
